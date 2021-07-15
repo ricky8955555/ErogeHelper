@@ -6,109 +6,110 @@ namespace ErogeHelper.Model.Entity.Response
 {
     public class JishoResponse
     {
-        public ResponseStatus StatusCode { get; set; }
+        [JsonIgnore]
+        public ResponseStatus StatusCode { get; init; }
 
         [JsonPropertyName("meta")]
-        public MetaData Meta { get; set; } = new();
+        public MetaData? Meta { get; init; }
 
         [JsonPropertyName("data")]
-        public List<Data> DataList { get; set; } = new();
+        public Data[]? DataList { get; init; }
 
         public class MetaData
         {
             [JsonPropertyName("status")]
-            public int Status { get; set; }
+            public int Status { get; init; }
         }
 
         public class Data
         {
             [JsonPropertyName("slug")]
-            public string Slug { get; set; } = string.Empty;
+            public string? Slug { get; init; }
 
 
             [JsonPropertyName("is_common")]
-            public bool IsCommon { get; set; }
+            public bool IsCommon { get; init; }
 
             [JsonPropertyName("tags")]
-            public List<string> Tags { get; set; } = new();
+            public string[]? Tags { get; init; }
 
 
             [JsonPropertyName("jlpt")]
-            public List<string> Jlpt { get; set; } = new();
+            public string[]? Jlpt { get; init; }
 
 
             [JsonPropertyName("japanese")]
-            public List<Japanese> JapaneseList { get; set; } = new();
+            public Japanese[]? JapaneseList { get; init; }
 
             [JsonPropertyName("senses")]
-            public List<Sense> Senses { get; set; } = new();
+            public Sense[]? Senses { get; init; }
 
             [JsonPropertyName("attribution")]
-            public Attribution Attribution { get; set; } = new();
+            public Attribution? Attribution { get; init; }
         }
 
         public class Japanese
         {
             [JsonPropertyName("word")]
-            public string Word { get; set; } = string.Empty;
+            public string? Word { get; init; }
 
             [JsonPropertyName("reading")]
-            public string Reading { get; set; } = string.Empty;
+            public string? Reading { get; init; }
         }
 
         public class Sense
         {
             [JsonPropertyName("english_definitions")]
-            public List<string> EnglishDefinitions { get; set; } = new();
+            public string[]? EnglishDefinitions { get; init; }
 
             [JsonPropertyName("parts_of_speech")]
-            public List<string> PartsOfSpeech { get; set; } = new();
+            public string[]? PartsOfSpeech { get; init; }
 
             [JsonPropertyName("links")]
-            public List<Link> Links { get; set; } = new();
+            public Link[]? Links { get; init; }
 
             [JsonPropertyName("tags")]
-            public List<object> Tags { get; set; } = null!;
+            public object[]? Tags { get; init; }
 
             [JsonPropertyName("restrictions")]
-            public List<object> Restrictions { get; set; } = null!;
+            public object[]? Restrictions { get; init; }
 
             [JsonPropertyName("see_also")]
-            public List<object> SeeAlso { get; set; } = null!;
+            public object[]? SeeAlso { get; init; }
 
             [JsonPropertyName("antonyms")]
-            public List<object> Antonyms { get; set; } = null!;
+            public object[]? Antonyms { get; init; }
 
             [JsonPropertyName("source")]
-            public List<object> Source { get; set; } = null!;
+            public object[]? Source { get; init; }
 
             [JsonPropertyName("info")]
-            public List<string> Info { get; set; } = new();
+            public string[]? Info { get; init; }
 
             [JsonPropertyName("sentences")]
-            public List<object> Sentences { get; set; } = null!;
+            public object[]? Sentences { get; init; }
         }
 
         public class Link
         {
             [JsonPropertyName("text")]
-            public string Text { get; set; } = string.Empty;
+            public string? Text { get; init; }
 
             [JsonPropertyName("url")]
-            public string Url { get; set; } = string.Empty;
+            public string? Url { get; init; }
         }
 
         public class Attribution
         {
             [JsonPropertyName("jmdict")]
-            public bool Jmdict { get; set; }
+            public bool Jmdict { get; init; }
 
             [JsonPropertyName("jmnedict")]
-            public bool Jmnedict { get; set; }
+            public bool Jmnedict { get; init; }
 
             // Dbpedia url or "False"
             [JsonPropertyName("dbpedia")]
-            public object Dbpedia { get; set; } = string.Empty;
+            public object? Dbpedia { get; init; }
         }
     }
 }

@@ -49,7 +49,7 @@ namespace ErogeHelper.Model.Service
         }
 
         public GameWindowPosition GetLastWindowPosition() => _lastPos;
-        public WindowSize GetLastWindowSize() => new WindowSize(_oldWidth, _oldHeight);
+        public WindowSize GetLastWindowSize() => new(_oldWidth, _oldHeight);
 
         /// <summary>
         /// Check and reset or do nothing

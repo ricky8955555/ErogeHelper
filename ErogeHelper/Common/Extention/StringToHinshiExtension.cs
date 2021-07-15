@@ -1,38 +1,38 @@
 ﻿using System.Windows.Media;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 using ErogeHelper.Common.Enum;
 
 namespace ErogeHelper.Common.Extention
 {
     public static class HinshiColorExtension
     {
-        public static Hinshi ToHinshi(this string partOfSpeech)
+        public static JapanesePartOfSpeech ToHinshi(this string partOfSpeech)
         {
             return partOfSpeech switch
             {
-                "名詞" => Hinshi.名詞,
-                "動詞" => Hinshi.動詞,
-                "形容詞" => Hinshi.形容詞,
-                "副詞" => Hinshi.副詞,
-                "助詞" => Hinshi.助詞,
-                "助動詞" => Hinshi.助動詞,
-                "感動詞" => Hinshi.感動詞,
-                "形状詞" => Hinshi.形状詞,
-                "代名詞" => Hinshi.代名詞,
-                "連体詞" => Hinshi.連体詞,
-                "接尾辞" => Hinshi.接尾辞,
-                "補助記号" => Hinshi.補助記号,
-                _ => Hinshi.未定だ
+                "名詞" => JapanesePartOfSpeech.Noun,
+                "動詞" => JapanesePartOfSpeech.Verb,
+                "形容詞" => JapanesePartOfSpeech.Adjective,
+                "副詞" => JapanesePartOfSpeech.Adverb,
+                "助詞" => JapanesePartOfSpeech.Auxiliary,
+                "助動詞" => JapanesePartOfSpeech.AuxiliaryVerb,
+                "感動詞" => JapanesePartOfSpeech.Interjection,
+                "形状詞" => JapanesePartOfSpeech.Form,
+                "代名詞" => JapanesePartOfSpeech.Pronoun,
+                "連体詞" => JapanesePartOfSpeech.Conjunction,
+                "接尾辞" => JapanesePartOfSpeech.Suffix,
+                "補助記号" => JapanesePartOfSpeech.Mark,
+                _ => JapanesePartOfSpeech.Undefined
             };
         }
 
-        public static ImageSource ToColor(this Hinshi partOfSpeech)
+        public static ImageSource ToColor(this JapanesePartOfSpeech partOfSpeech)
         {
             return partOfSpeech switch
             {
-                Hinshi.名詞 or Hinshi.代名詞 => StaticXamlBitmapImage.AquaGreenImage,
-                Hinshi.動詞 or Hinshi.助動詞 or Hinshi.副詞 => StaticXamlBitmapImage.GreenImage,
-                Hinshi.形容詞 or Hinshi.感動詞 or Hinshi.形状詞 or Hinshi.連体詞 or Hinshi.接尾辞 => StaticXamlBitmapImage.PinkImage,
+                JapanesePartOfSpeech.Noun or JapanesePartOfSpeech.Pronoun => StaticXamlBitmapImage.AquaGreenImage,
+                JapanesePartOfSpeech.Verb or JapanesePartOfSpeech.AuxiliaryVerb or JapanesePartOfSpeech.Adverb => StaticXamlBitmapImage.GreenImage,
+                JapanesePartOfSpeech.Adjective or JapanesePartOfSpeech.Interjection or JapanesePartOfSpeech.Form or JapanesePartOfSpeech.Conjunction or JapanesePartOfSpeech.Suffix => StaticXamlBitmapImage.PinkImage,
                 _ => StaticXamlBitmapImage.TransparentImage, // Hinshi.助詞
             };
         }

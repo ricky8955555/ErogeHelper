@@ -1,7 +1,7 @@
 ﻿using ErogeHelper.Common.Entity;
 using ErogeHelper.Common.Enum;
 
-namespace ErogeHelper.Common.Constraint
+namespace ErogeHelper.Common.Constant
 {
     internal static class DefaultConfigValuesStore
     {

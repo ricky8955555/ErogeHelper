@@ -1,6 +1,6 @@
 ﻿using ModernWpf.Controls;
 
-namespace ErogeHelper.Common.Constraint
+namespace ErogeHelper.Common.Constant
 {
     public static class CommonSymbols
     {

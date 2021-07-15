@@ -126,7 +126,7 @@ namespace ErogeHelper.ViewModel.Window
                         {
                             Md5 = md5,
                             GameIdList = content.GameId.ToString(),
-                            RegExp = content.RegExp,
+                            RegExp = content.Regex,
                             TextractorSettingJson = content.GameSettingJson,
                         }).ConfigureAwait(false);
                     }
@@ -142,7 +142,7 @@ namespace ErogeHelper.ViewModel.Window
                 }
             }
 
-            if (settingJson == string.Empty)
+            if (settingJson is null)
             {
                 Log.Info("Not find game hook setting, open hook panel.");
                 _textractorService.InjectProcesses(gameProcesses);
@@ -157,14 +157,7 @@ namespace ErogeHelper.ViewModel.Window
             await _windowManager.SilentStartWindowFromIoCAsync<GameViewModel>("InsideView").ConfigureAwait(false);
             await _windowManager.SilentStartWindowFromIoCAsync<GameViewModel>("OutsideView").ConfigureAwait(false);
 
-            if (_ehConfigRepository.UseMoveableTextControl)
-            {
-                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = true});
-            }
-            else
-            {
-                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = false});
-            }
+            await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = _ehConfigRepository.UseMoveableTextControl });
 
             await _eventAggregator.PublishOnUIThreadAsync(
                     new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "InsideView"));

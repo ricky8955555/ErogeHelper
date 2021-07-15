@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ErogeHelper.Common;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 
 namespace ErogeHelper.View.Dialog
 {
@@ -115,7 +115,7 @@ namespace ErogeHelper.View.Dialog
         private void CodeTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             // see: Common.Validation.InvalidCodeFormatValidationRule
-            const string patten = ConstraintValues.CodeRegExp;
+            const string patten = ConstantValues.CodeRegExp;
 
             if (sender is TextBox codeTextBox)
             {

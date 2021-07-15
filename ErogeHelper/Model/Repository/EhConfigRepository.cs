@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 using System.Threading;
 using System.Threading.Tasks;
 using ErogeHelper.Common.Entity;
+using System.Text.Json.Serialization;
 
 namespace ErogeHelper.Model.Repository
 {
@@ -25,107 +26,126 @@ namespace ErogeHelper.Model.Repository
             AppDataDir = Path.Combine(rootDir, "ErogeHelper");
 
             _configFilePath = Path.Combine(AppDataDir, "EhSettings.json");
-            LocalSetting = LocalSettingInit(_configFilePath);
+            _localSetting = ReadLocalSetting(_configFilePath);
         }
 
         public void ClearConfig()
         {
-            LocalSetting.Clear();
+            _localSetting.Clear();
 
-            File.WriteAllText(_configFilePath, JsonSerializer.Serialize(LocalSetting));
+            File.WriteAllText(_configFilePath, JsonSerializer.Serialize(_localSetting));
         }
 
         #region Private Methods
 
         private readonly string _configFilePath;
-        private Dictionary<string, string> LocalSetting { get; }
-        private static Dictionary<string, string> LocalSettingInit(string settingPath)
+        private readonly Dictionary<string, object?> _localSetting;
+
+        private static Dictionary<string, object?> ReadLocalSetting(string settingPath)
         {
             if (!File.Exists(settingPath))
             {
                 FileInfo file = new(settingPath);
                 // If the directory already exists, this method does nothing.
                 file.Directory?.Create();
-                File.WriteAllText(file.FullName, JsonSerializer.Serialize(new Dictionary<string, string>()));
+
+                File.WriteAllText(file.FullName, JsonSerializer.Serialize(new Dictionary<string, object?>()));
             }
-            var rawText = File.ReadAllText(settingPath);
-            return JsonSerializer.Deserialize<Dictionary<string, string>>(rawText) ?? new Dictionary<string, string>();
+
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new DictionaryJsonConverter());
+
+            string rawText = File.ReadAllText(settingPath);
+            return JsonSerializer.Deserialize<Dictionary<string, object?>>(rawText, options) ?? new Dictionary<string, object?>();
         }
 
         private T GetValue<T>(T defaultValue, [CallerMemberName] string propertyName = "")
         {
-            if (!LocalSetting.TryGetValue(propertyName, out var outValue))
-                return defaultValue;
-
-            string value = outValue;
-
-            T ret = default!;
-            if (typeof(T) == typeof(string))
+            if (_localSetting.TryGetValue(propertyName, out object? value))
             {
-                ret = (T)(object)value;
-            }
-            else if (typeof(T) == typeof(bool))
-            {
-                if (bool.TryParse(value, out var result))
+                try
                 {
-                    ret = (T)(object)result;
+                    if (value is not null)
+                    {
+                        return (T)value;
+                    }
+                }
+                catch (InvalidCastException)
+                {
                 }
             }
-            else if (typeof(T) == typeof(int))
-            {
-                if (int.TryParse(value, out var result))
-                {
-                    ret = (T)(object)result;
-                }
-            }
-            else if (typeof(T) == typeof(double))
-            {
-                if (double.TryParse(value, out var result))
-                {
-                    ret = (T)(object)result;
-                }
-            }
-            else if (typeof(T).IsEnum)
-            {
-                ret = (T)Enum.Parse(typeof(T), value);
-            }
-            else
-            {
-                ret = defaultValue;
-            }
 
-            return ret;
+            return defaultValue;
         }
 
-        private SemaphoreSlim _semaphoreSlim = new(1, 1);
+        private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
 
         private void SetValue<T>(T value, [CallerMemberName] string propertyName = "")
         {
-            var targetStrValue = value?.ToString() ?? string.Empty;
-
-            if (LocalSetting.TryGetValue(propertyName, out var outValue) && targetStrValue.Equals(outValue))
+            if (_localSetting.TryGetValue(propertyName, out object? outValue) && value!.Equals(outValue))
+            {
                 return;
+            }
 
-            LocalSetting[propertyName] = targetStrValue;
-            Log.Debug($"{propertyName} changed to {targetStrValue}");
-            Task.Run(async () =>
-            { 
-                await _semaphoreSlim.WaitAsync();
-                try
-                { 
-                    await File.WriteAllTextAsync(
-                        _configFilePath, 
-                        JsonSerializer.Serialize(LocalSetting, new JsonSerializerOptions { WriteIndented = true }));
-                }
-                catch(Exception ex)
+            _localSetting[propertyName] = value!;
+            Log.Debug($"{propertyName} changed to {value}");
+            _ = Task.Run(async () =>
+              {
+                  await _semaphoreSlim.WaitAsync();
+                  try
+                  {
+                      await File.WriteAllTextAsync(
+                          _configFilePath,
+                          JsonSerializer.Serialize(_localSetting, new JsonSerializerOptions { WriteIndented = true }));
+                  }
+                  catch (Exception ex)
+                  {
+                      Log.Error(ex);
+                  }
+                  finally
+                  {
+                      _semaphoreSlim.Release();
+                  }
+              });
+        }
+
+        private class DictionaryJsonConverter : JsonConverter<Dictionary<string, object?>>
+        {
+            public override Dictionary<string, object?> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                var newOptions = new JsonSerializerOptions(options);
+                newOptions.Converters.Add(this);
+
+                var properties = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ref reader, options);
+                var dictionary = new Dictionary<string, object?>();
+
+                foreach (var property in properties!)
                 {
-                    Log.Error(ex);
+                    var value = property.Value;
+
+                    object? newValue = value.ValueKind switch
+                    {
+                        JsonValueKind.Undefined => null,
+                        JsonValueKind.Object => JsonSerializer.Deserialize<Dictionary<string, object>>(value.GetRawText(), newOptions),
+                        JsonValueKind.Array => JsonSerializer.Deserialize<IEnumerable<object>>(value.GetRawText(), newOptions),
+                        JsonValueKind.String => value.GetString(),
+                        JsonValueKind.Number => value.GetInt32(),
+                        JsonValueKind.True => true,
+                        JsonValueKind.False => false,
+                        JsonValueKind.Null => null,
+                        _ => throw new NotSupportedException()
+                    };
+
+                    dictionary.Add(property.Key, newValue);
                 }
-                finally
-                { 
-                    _semaphoreSlim.Release();
-                }
-            });
+
+                return dictionary;
+            }
+
+            public override void Write(Utf8JsonWriter writer, Dictionary<string, object?> value, JsonSerializerOptions options)
+            {
+                JsonSerializer.Serialize(writer, value, options);
+            }
         }
 
         #endregion

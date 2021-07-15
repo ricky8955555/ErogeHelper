@@ -8,6 +8,6 @@ namespace ErogeHelper.Common.Entity
 
         public string Kana { get; set; } = string.Empty;
 
-        public Hinshi PartOfSpeech { get; set; }
+        public JapanesePartOfSpeech PartOfSpeech { get; set; }
     }
 }

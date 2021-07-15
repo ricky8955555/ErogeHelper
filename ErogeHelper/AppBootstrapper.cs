@@ -60,7 +60,7 @@ namespace ErogeHelper
             
             if (!Process.GetProcessesByName(Path.GetFileNameWithoutExtension(gamePath)).Any())
             {
-                if (e.Args.Contains("/le") || e.Args.Contains("-le"))
+                if (e.Args.Any(str => str is "/le" or "-le"))
                 {
                     // Use Locate Emulator (x86 game only)
                     Process.Start(new ProcessStartInfo
@@ -115,7 +115,7 @@ namespace ErogeHelper
 
             _ = gameWindowHooker.SetGameWindowHookAsync(gameProcess, gameProcesses.ToList());
 
-            var settingJson = string.Empty;
+            string? settingJson = null;
             var gameInfo = await ehDbRepository.GetGameInfoAsync().ConfigureAwait(false);
             if (gameInfo is not null)
             {
@@ -137,7 +137,7 @@ namespace ErogeHelper
                         {
                             Md5 = md5,
                             GameIdList = content.GameId.ToString(),
-                            RegExp = content.RegExp,
+                            RegExp = content.Regex,
                             TextractorSettingJson = content.GameSettingJson,
                         }).ConfigureAwait(false);
                     }
@@ -154,7 +154,7 @@ namespace ErogeHelper
                 }
             }
 
-            if (settingJson == string.Empty)
+            if (settingJson is null)
             {
                 Log.Info("Not find game hook setting, open hook panel.");
                 textractorService.InjectProcesses(gameProcesses);

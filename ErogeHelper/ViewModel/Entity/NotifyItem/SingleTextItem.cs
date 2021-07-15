@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 using ErogeHelper.Common.Enum;
 
 namespace ErogeHelper.ViewModel.Entity.NotifyItem

@@ -90,7 +90,10 @@ namespace ErogeHelper.ViewModel.Page
                 }
                 else if (!InvalidRegExp)
                 {
-                    SelectedText = Utils.TextEvaluateWithRegExp(_rawText ?? string.Empty, value);
+                    if (_rawText is not null)
+                    {
+                        SelectedText = Utils.TextEvaluateWithRegExp(_rawText, value);
+                    }
                 }
                 NotifyOfPropertyChange(() => RegExp);
             }
@@ -174,7 +177,7 @@ namespace ErogeHelper.ViewModel.Page
         {
             CanSearchCode = false;
             var hcode = await _dataService.QueryHCode().ConfigureAwait(false);
-            if (hcode != string.Empty)
+            if (hcode is not null)
             {
                 InputHCode = hcode;
                 Log.Info(hcode);
@@ -327,7 +330,7 @@ namespace ErogeHelper.ViewModel.Page
                 if (_selectedTextThreads.Any(thread => thread.Handle == hp.Handle))
                 {
                     _rawText = hp.Text;
-                    SelectedText = Utils.TextEvaluateWithRegExp(_rawText ?? string.Empty, RegExp ?? string.Empty);
+                    SelectedText = Utils.TextEvaluateWithRegExp(_rawText ?? string.Empty, RegExp);
                 }
             });
         }
@@ -339,7 +342,7 @@ namespace ErogeHelper.ViewModel.Page
                 _selectedTextThreads.Add(message.HookMapItem);
 
                 _rawText = message.HookMapItem.Text;
-                SelectedText = Utils.TextEvaluateWithRegExp(_rawText ?? string.Empty, RegExp ?? string.Empty);
+                SelectedText = Utils.TextEvaluateWithRegExp(_rawText ?? string.Empty, RegExp);
             }
             else
             {

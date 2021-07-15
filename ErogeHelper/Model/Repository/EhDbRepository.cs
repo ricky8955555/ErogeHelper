@@ -95,6 +95,7 @@ WHERE Md5 = @Md5";
         public void Dispose()
         {
             _connection.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

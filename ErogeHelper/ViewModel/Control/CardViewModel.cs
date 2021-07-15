@@ -283,33 +283,33 @@ namespace ErogeHelper.ViewModel.Control
             if (token.IsCancellationRequested)
                 return;
 
-            foreach (var jishoItem in result.DataList)
+            foreach (var jishoItem in result.DataList!)
             {
                 BindableCollection<JishoItem.Detail> details = new();
                 var senseCount = 1;
-                foreach (var sense in jishoItem.Senses)
+                foreach (var sense in jishoItem.Senses!)
                 {
                     BindableCollection<JishoItem.Detail.Link> links = new();
-                    foreach (var link in sense.Links)
+                    foreach (var link in sense.Links!)
                     {
                         links.Add(new JishoItem.Detail.Link { Text = link.Text, HyperLink = link.Url });
                     }
 
                     details.Add(new JishoItem.Detail
                     {
-                        PartOfSpeech = string.Join(", ", sense.PartsOfSpeech),
-                        Explanation = $"{senseCount++}. " + string.Join("; ", sense.EnglishDefinitions),
+                        PartOfSpeech = string.Join(", ", sense.PartsOfSpeech!),
+                        Explanation = $"{senseCount++}. " + string.Join("; ", sense.EnglishDefinitions!),
                         Links = links
                     });
                 }
 
                 JishoCollection.Add(new JishoItem
                 {
-                    Ruby = '(' + jishoItem.JapaneseList[0].Reading + ')',
+                    Ruby = '(' + jishoItem.JapaneseList![0].Reading + ')',
                     Word = jishoItem.JapaneseList[0].Word,
                     CommonWord = jishoItem.IsCommon ? "Common" : string.Empty,
-                    JlptLevel = jishoItem.Jlpt.Count != 0 ? jishoItem.Jlpt[0] : string.Empty,
-                    WanikanaLevel = jishoItem.Tags.Count != 0 ? jishoItem.Tags[0] : string.Empty,
+                    JlptLevel = jishoItem.Jlpt!.Length != 0 ? jishoItem.Jlpt[0] : string.Empty,
+                    WanikanaLevel = jishoItem.Tags!.Length != 0 ? jishoItem.Tags[0] : string.Empty,
                     Details = details
                 });
             }

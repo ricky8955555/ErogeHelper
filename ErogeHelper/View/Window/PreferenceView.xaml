@@ -6,7 +6,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:resx="clr-namespace:ErogeHelper.Language;assembly=ErogeHelper.Language"
         xmlns:common="clr-namespace:ErogeHelper.Common"
-        xmlns:constraint="clr-namespace:ErogeHelper.Common.Constraint"
+        xmlns:constraint="clr-namespace:ErogeHelper.Common.Constant"
         mc:Ignorable="d"
         ui:WindowHelper.UseModernWindowStyle="True" ui:TitleBar.ExtendViewIntoTitleBar="True"
         Title="PreferenceView" Height="600" Width="600" 

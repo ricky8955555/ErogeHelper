@@ -7,6 +7,7 @@ using ErogeHelper.Model.Service.Interface;
 using ErogeHelper.View.Window;
 using ErogeHelper.ViewModel.Control;
 using ErogeHelper.ViewModel.Entity.NotifyItem;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,8 @@ using Utils = ErogeHelper.Common.Utils;
 namespace ErogeHelper.ViewModel.Window
 {
     public class GameViewModel : PropertyChangedBase,
-        IHandle<UseMoveableTextMessage>, IHandle<JapaneseVisibleMessage>, IHandle<FullScreenChangedMessage>, IHandle<DanmakuVisibleMessage>, IHandle<DanmakuMessage>
+        IHandle<UseMoveableTextMessage>, IHandle<JapaneseVisibleMessage>, IHandle<FullScreenChangedMessage>, IHandle<DanmakuVisibleMessage>, IHandle<DanmakuMessage>,
+        IDisposable
     {
         public GameViewModel(
             IGameDataService dataService,
@@ -356,14 +358,16 @@ namespace ErogeHelper.ViewModel.Window
                     InsideTextVisibility = Visibility.Collapsed;
                     InsideMoveableTextVisibility = Visibility.Visible;
                     await _eventAggregator.PublishOnUIThreadAsync(
-                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"));
+                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"),
+                        cancellationToken);
                 }
                 else
                 {
                     InsideTextVisibility = Visibility.Collapsed;
                     InsideMoveableTextVisibility = Visibility.Collapsed;
                     await _eventAggregator.PublishOnUIThreadAsync(
-                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "OutsideView"));
+                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "OutsideView"),
+                        cancellationToken);
                 }
             }
             else
@@ -371,7 +375,8 @@ namespace ErogeHelper.ViewModel.Window
                 InsideTextVisibility = Visibility.Visible;
                 InsideMoveableTextVisibility = Visibility.Collapsed;
                 await _eventAggregator.PublishOnUIThreadAsync(
-                    new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"));
+                    new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"),
+                    cancellationToken);
             }
         }
 
@@ -384,14 +389,16 @@ namespace ErogeHelper.ViewModel.Window
                     InsideTextVisibility = Visibility.Collapsed;
                     InsideMoveableTextVisibility = Visibility.Visible;
                     await _eventAggregator.PublishOnUIThreadAsync(
-                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"));
+                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Hide, null, "OutsideView"),
+                        cancellationToken);
                 }
                 else
                 {
                     InsideTextVisibility = Visibility.Collapsed;
                     InsideMoveableTextVisibility = Visibility.Collapsed;
                     await _eventAggregator.PublishOnUIThreadAsync(
-                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "OutsideView"));
+                        new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "OutsideView"),
+                        cancellationToken);
                 }
             }
         }
@@ -433,10 +440,18 @@ namespace ErogeHelper.ViewModel.Window
             return Task.CompletedTask;
         }
 
+        public void Dispose()
+        {
+            _eventAggregator.Unsubscribe(this);
+            GC.SuppressFinalize(this);
+        }
+
         private void ToastDanmaku(string danmakuText)
         { 
             if (_danmakuContainer is null || string.IsNullOrWhiteSpace(danmakuText))
+            {
                 return;
+            }
 
             _danmaku.PositionX = _danmakuContainer.ActualWidth;
             _danmaku.OutlineEnabled = false;
@@ -447,8 +462,6 @@ namespace ErogeHelper.ViewModel.Window
             // override default danmaku style
             _damakuEngine?.DrawDanmaku(danmakuText, _danmaku);
         }
-
-        ~GameViewModel() => _eventAggregator.Unsubscribe(this);
 
 #pragma warning disable CS8618
         public GameViewModel() { }

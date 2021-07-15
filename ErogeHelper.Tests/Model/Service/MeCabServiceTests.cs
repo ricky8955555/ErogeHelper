@@ -28,50 +28,50 @@ namespace ErogeHelper.Tests.Model.Service
 
             Assert.AreEqual("ヒルダ", list[0].Word);
             Assert.AreEqual(" ", list[0].Kana);
-            Assert.AreEqual(Hinshi.名詞, list[0].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Noun, list[0].PartOfSpeech);
             Assert.AreEqual("は", list[1].Word);
             Assert.AreEqual(" ", list[1].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[1].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[1].PartOfSpeech);
             Assert.AreEqual("井戸", list[2].Word);
             // may be different kana type in config
             //Assert.AreEqual("いど", list[2].Kana);
-            Assert.AreEqual(Hinshi.名詞, list[2].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Noun, list[2].PartOfSpeech);
             Assert.AreEqual("から", list[3].Word);
             Assert.AreEqual(" ", list[3].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[3].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[3].PartOfSpeech);
             Assert.AreEqual("水", list[4].Word);
             //Assert.AreEqual("みず", list[4].Kana);
-            Assert.AreEqual(Hinshi.名詞, list[4].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Noun, list[4].PartOfSpeech);
             Assert.AreEqual("を", list[5].Word);
             Assert.AreEqual(" ", list[5].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[5].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[5].PartOfSpeech);
             Assert.AreEqual("汲み取る", list[6].Word);
             //Assert.AreEqual("くみとる", list[6].Kana);
-            Assert.AreEqual(Hinshi.動詞, list[6].PartOfSpeech); 
+            Assert.AreEqual(JapanesePartOfSpeech.Verb, list[6].PartOfSpeech); 
             Assert.AreEqual("の", list[7].Word);
             Assert.AreEqual(" ", list[7].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[7].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[7].PartOfSpeech);
             Assert.AreEqual("を", list[8].Word);
             Assert.AreEqual(" ", list[8].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[8].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[8].PartOfSpeech);
             Assert.AreEqual("やめ", list[9].Word);
             Assert.AreEqual(" ", list[9].Kana);
-            Assert.AreEqual(Hinshi.動詞, list[9].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Verb, list[9].PartOfSpeech);
             Assert.AreEqual("なかっ", list[10].Word);
             Assert.AreEqual(" ", list[10].Kana);
-            Assert.AreEqual(Hinshi.助動詞, list[10].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.AuxiliaryVerb, list[10].PartOfSpeech);
             Assert.AreEqual("た", list[11].Word);
             Assert.AreEqual(" ", list[11].Kana);
-            Assert.AreEqual(Hinshi.助動詞, list[11].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.AuxiliaryVerb, list[11].PartOfSpeech);
             Assert.AreEqual("の", list[12].Word);
             Assert.AreEqual(" ", list[12].Kana);
-            Assert.AreEqual(Hinshi.助詞, list[12].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[12].PartOfSpeech);
             Assert.AreEqual("テキスト", list[13].Word);
             Assert.AreEqual("text", list[13].Kana);
-            Assert.AreEqual(Hinshi.名詞, list[13].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Noun, list[13].PartOfSpeech);
             Assert.AreEqual("。", list[14].Word);
             Assert.AreEqual(" ", list[14].Kana);
-            Assert.AreEqual(Hinshi.補助記号, list[14].PartOfSpeech);
+            Assert.AreEqual(JapanesePartOfSpeech.Mark, list[14].PartOfSpeech);
         }
 
         [TestMethod]

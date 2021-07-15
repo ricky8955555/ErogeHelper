@@ -34,7 +34,7 @@ namespace ErogeHelper.ViewModel.Page
                     @"luojunyuan", // Owner
                     @"Eroge-Helper", // Repo
                     false,  // Is pre-release
-                    version, // Current app version string
+                    version ?? "error", // Current app version string
                     tag => tag.Replace(@"v", string.Empty), // Tag to version string
                     new DefaultVersionComparer() // Version comparer
             );

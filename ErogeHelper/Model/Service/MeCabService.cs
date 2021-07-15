@@ -6,7 +6,6 @@ using ErogeHelper.Model.Service.Interface;
 using MeCab;
 using MeCab.Extension.UniDic;
 using System.Collections.Generic;
-using System.IO;
 using WanaKanaNet;
 
 namespace ErogeHelper.Model.Service
@@ -51,7 +50,7 @@ namespace ErogeHelper.Model.Service
                     mecabWord.Kana = WanaKana.ToRomaji(node.GetPron() ?? " ");
                 }
                 else if (!WanaKana.IsKana(node.Surface) &&
-                         mecabWord.PartOfSpeech != Hinshi.補助記号)
+                         mecabWord.PartOfSpeech != JapanesePartOfSpeech.Mark)
                 {
                     mecabWord.Kana = config.Hiragana
                         ? WanaKana.ToHiragana(node.GetPron() ?? " ")

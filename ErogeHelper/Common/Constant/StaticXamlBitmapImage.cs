@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Imaging;
 
-namespace ErogeHelper.Common.Constraint
+namespace ErogeHelper.Common.Constant
 {
     public static class StaticXamlBitmapImage
     {

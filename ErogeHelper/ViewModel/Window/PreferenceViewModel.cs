@@ -19,11 +19,14 @@ namespace ErogeHelper.ViewModel.Window
             AboutViewModel = aboutViewModel;
         }
 
-        public GeneralViewModel GeneralViewModel;
-        public MeCabViewModel MeCabViewModel;
-        public HookViewModel HookViewModel;
-        public TransViewModel TransViewModel;
+        public GeneralViewModel GeneralViewModel { get; }
 
-        public AboutViewModel AboutViewModel;
+        public MeCabViewModel MeCabViewModel { get; }
+
+        public HookViewModel HookViewModel { get; }
+
+        public TransViewModel TransViewModel { get; }
+
+        public AboutViewModel AboutViewModel { get; }
     }
 }

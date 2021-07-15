@@ -4,8 +4,8 @@ namespace ErogeHelper.Model.Service.Interface
 {
     public interface IHookDataService
     {
-        Task<string> QueryHCode();
+        Task<string?> QueryHCode();
 
-        string GetRegExp();
+        string? GetRegExp();
     }
 }

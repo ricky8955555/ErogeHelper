@@ -9,6 +9,6 @@ namespace ErogeHelper.ViewModel.Window
             HookPageFrame = hookViewModel;
         }
 
-        public HookViewModel HookPageFrame { get; set; }
+        public HookViewModel HookPageFrame { get; }
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,6 +23,9 @@ namespace ErogeHelper.Common
 {
     public static class Utils
     {
+        private static readonly string[] SizeUnits = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+        private static readonly int SizeDivisor = 1024;
+
         public static BitmapImage? PeIcon2BitmapImage(string fullPath, bool allApp)
         {
             var result = new BitmapImage();
@@ -32,7 +36,7 @@ namespace ErogeHelper.Common
             Stream stream = new MemoryStream();
 
             var iconBitmap = (Icon.ExtractAssociatedIcon(fullPath) ?? throw new InvalidOperationException()).ToBitmap();
-            iconBitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            iconBitmap.Save(stream, ImageFormat.Png);
             iconBitmap.Dispose();
             result.BeginInit();
             result.StreamSource = stream;
@@ -100,17 +104,16 @@ namespace ErogeHelper.Common
         /// <returns>Upper case string</returns>
         public static string GetFileMd5(string filePath)
         {
-            FileStream file = File.OpenRead(filePath);
-            var md5 = new MD5CryptoServiceProvider();
-            byte[] retVal = md5.ComputeHash(file);
-            file.Close();
+            using var stream = File.OpenRead(filePath);
+            var md5 = MD5.Create();
+            byte[] hash = md5.ComputeHash(stream);
 
             var sb = new StringBuilder();
-            foreach (var byteItem in retVal)
+            foreach (byte byteItem in hash)
             {
-                sb.Append(byteItem.ToString("x2"));
+                sb.Append(byteItem.ToString("X2"));
             }
-            return sb.ToString().ToUpper();
+            return sb.ToString();
         }
 
         /// <summary>
@@ -119,22 +122,32 @@ namespace ErogeHelper.Common
         /// <param name="sourceInput"></param>
         /// <param name="expr"></param>
         /// <returns></returns>
-        public static string TextEvaluateWithRegExp(string sourceInput, string expr)
+        public static string TextEvaluateWithRegExp(string sourceInput, string? expr)
         {
-            const string begin = "|~S~|";
-            const string end = "|~E~|";
+            if (sourceInput is null)
+            {
+                throw new ArgumentNullException(nameof(sourceInput));
+            }
 
-            if (expr == string.Empty)
+            string begin = @"|~S~|";
+            string end = @"|~E~|";
+
+            if (expr is null)
+            {
                 return sourceInput;
+            }
 
             if (expr[^1] == '|')
+            {
                 return sourceInput;
+            }
 
             string wrapperText = sourceInput;
 
             var instant = new Regex(expr);
             var collect = instant.Matches(sourceInput);
-            foreach (Match match in collect)
+
+            foreach (object match in collect)
             {
                 var beginPos = wrapperText.LastIndexOf(end, StringComparison.Ordinal);
                 wrapperText = instant.Replace(
@@ -159,9 +172,9 @@ namespace ErogeHelper.Common
 
             return new Dictionary<string, string>
             {
-                { "File", file},
-                { "Dir", dir},
-                { "Title", title},
+                { "File", file },
+                { "Dir", dir },
+                { "Title", title },
                 { "FileNoExt", fileWithoutExtension },
             };
         }
@@ -240,8 +253,8 @@ namespace ErogeHelper.Common
             return collect;
         }
 
-        public static string AppVersion => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "error";
-
+        public static readonly string? AppVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+        
         public static string ConsoleI18N(string text)
         {
             // https://github.com/lgztx96/texthost/blob/master/texthost/texthost.cpp
@@ -277,26 +290,15 @@ namespace ErogeHelper.Common
 
         public static string CountSize(long size)
         {
-            const ushort step = 1024;
-            const int step2 = step * step;
-            const int step3 = step2 * step;
-            const long step4 = (long)step3 * step;
-            const long step5 = step4 * step;
-            const long step6 = step5 * step;
-            double factSize = size >= 0 ? size : (ulong)size;
-            var mStrSize = factSize switch
+            int length = SizeUnits.Length;
+            double newSize = size;
+
+            while (newSize < SizeDivisor && length-- > 0)
             {
-                0.0 => $@"{factSize:F2} Byte",
-                > 0.0 and < step => $@"{factSize:F2} Bytes",
-                >= step and < step2 => $@"{factSize / step:F2} KB",
-                >= step2 and < step3 => $@"{factSize / step2:F2} MB",
-                >= step3 and < step4 => $@"{factSize / step3:F2} GB",
-                >= step4 and < step5 => $@"{factSize / step4:F2} TB",
-                >= step5 and < step6 => $@"{factSize / step5:F2} PB",
-                >= step6 => $@"{factSize / step6:F2} EB",
-                _ => $@"{size}"
-            };
-            return mStrSize;
+                newSize /= SizeDivisor;
+            }
+
+            return newSize.ToString("F2") + SizeUnits[^length];
         }
 
         public static long GetDirectorySize(string dirPath)
@@ -309,11 +311,11 @@ namespace ErogeHelper.Common
             DirectoryInfo dirInfo = new(dirPath);
 
             // Add file sizes.
-            FileInfo[] fileInfos = dirInfo.GetFiles();
+            var fileInfos = dirInfo.GetFiles();
             var size = fileInfos.Sum(fi => fi.Length);
 
             // Add sub-directory sizes.
-            DirectoryInfo[] directories = dirInfo.GetDirectories();
+            var directories = dirInfo.GetDirectories();
             size += directories.Sum(di => GetDirectorySize(di.FullName));
 
             return size;

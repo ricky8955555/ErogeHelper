@@ -43,7 +43,7 @@ namespace ErogeHelper.ViewModel.Page
             set => _ehConfigRepository.MonitorClipboard = value;
         }
 
-        public double ReceivedMaxTextLength
+        public int ReceivedMaxTextLength
         { 
             get => _ehConfigRepository.MaxAcceptTextLength;
             set 
@@ -51,10 +51,10 @@ namespace ErogeHelper.ViewModel.Page
                 if (value < 60 || value > 180 || double.IsNaN(value))
                 { 
                     NotifyOfPropertyChange(() => ReceivedMaxTextLength);
-                    return ;
+                    return;
                 }
 
-                _ehConfigRepository.MaxAcceptTextLength = (int)value;
+                _ehConfigRepository.MaxAcceptTextLength = value;
             }
         }
 
@@ -80,14 +80,7 @@ namespace ErogeHelper.ViewModel.Page
             get => _ehConfigRepository.UseMoveableTextControl;
             set
             {
-                if (value)
-                {
-                    _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = true});
-                }
-                else
-                {
-                    _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = false});
-                }
+                _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = value });
                 _ehConfigRepository.UseMoveableTextControl = value;
             }
         }

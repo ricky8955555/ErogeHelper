@@ -4,24 +4,24 @@ namespace ErogeHelper.ViewModel.Entity.NotifyItem
 {
     public class JishoItem
     {
-        public string Ruby { get; set; } = string.Empty;
-        public string Word { get; set; } = string.Empty;
-        public string CommonWord { get; set; } = string.Empty;
-        public string JlptLevel { get; set; } = string.Empty;
-        public string WanikanaLevel { get; set; } = string.Empty;
+        public string? Ruby { get; set; }
+        public string? Word { get; set; }
+        public string? CommonWord { get; set; }
+        public string? JlptLevel { get; set; }
+        public string? WanikanaLevel { get; set; }
 
-        public BindableCollection<Detail> Details { get; set; } = new();
+        public BindableCollection<Detail>? Details { get; set; }
 
         public class Detail
         {
-            public string PartOfSpeech { get; set; } = string.Empty;
-            public string Explanation { get; set; } = string.Empty;
-            public BindableCollection<Link> Links { get; set; } = new();
+            public string? PartOfSpeech { get; set; }
+            public string? Explanation { get; set; }
+            public BindableCollection<Link>? Links { get; set; }
 
             public class Link
             {
-                public string Text { get; set; } = string.Empty;
-                public string HyperLink { get; set; } = string.Empty;
+                public string? Text { get; set; }
+                public string? HyperLink { get; set; }
             }
         }
     }

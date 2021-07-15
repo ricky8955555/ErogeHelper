@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Documents;
 
 namespace ErogeHelper.Model.Entity.Payload
@@ -11,10 +12,7 @@ namespace ErogeHelper.Model.Entity.Payload
             Username = username;
             Password = password;
             Md5 = md5;
-            foreach (var (type, value) in names)
-            {
-                Names.Add(new GameNamePair(type, value));
-            }
+            Names = new List<GameNamePair>(names.Select(pair => new GameNamePair(pair.Key, pair.Value)));
             TextSetting = textSetting;
             RegExp = regExp;
         }
@@ -25,7 +23,7 @@ namespace ErogeHelper.Model.Entity.Payload
 
         public string Md5 { get; }
 
-        public List<GameNamePair> Names { get; } = new();
+        public List<GameNamePair> Names { get; }
 
         public string TextSetting { get; }
 

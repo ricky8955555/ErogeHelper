@@ -108,8 +108,9 @@ namespace ErogeHelper.Common.Extention
             return services;
         }
 
-        private static void ReAddSingleton<T>(this IServiceCollection services) =>
-            services.Remove<T>().TryAddSingleton(typeof(T));
+        private static void ReAddSingleton<T>(this IServiceCollection services)
+            where T : class
+            => services.Remove<T>().TryAddSingleton<T>();
 
         private static IServiceCollection Remove<T>(this IServiceCollection services)
         {

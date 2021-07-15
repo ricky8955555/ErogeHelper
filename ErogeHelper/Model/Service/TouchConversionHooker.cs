@@ -73,21 +73,10 @@ namespace ErogeHelper.Model.Service
             return NativeMethods.CallNextHookEx(_hookId, nCode, wParam, lParam);
         }
 
-        private bool _disposed;
-
         public void Dispose()
         {
-            if (_disposed)
-                return;
-
-            NativeMethods.UnhookWindowsHookEx(_hookId);
-            _disposed = true;
+            _ = NativeMethods.UnhookWindowsHookEx(_hookId);
             GC.SuppressFinalize(this);
-        }
-
-        ~TouchConversionHooker()
-        {
-            Dispose();
         }
     }
 }

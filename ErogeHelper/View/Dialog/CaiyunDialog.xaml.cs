@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 using ErogeHelper.Model.Repository;
 using ModernWpf.Controls;
 using System.Windows;

@@ -110,9 +110,8 @@ namespace ErogeHelper.ViewModel.Window
                 var count = 1234;
                 Dictionary<int, string> countSourceWordDic = new();
                 var tmpStr = PendingToTranslateText;
-                var termDatas = TermList.ToList();
-                termDatas
-                    .Where(term => tmpStr.Contains(term.SourceWord)).ToList()
+                TermList
+                    .Where(term => tmpStr.Contains(term.SourceWord))
                     .ForEach(term => 
                     {
                         tmpStr = tmpStr.Replace(term.SourceWord, $"{{{count}}}");

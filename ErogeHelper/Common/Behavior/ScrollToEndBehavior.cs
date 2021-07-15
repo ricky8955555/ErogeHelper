@@ -25,10 +25,9 @@ namespace ErogeHelper.Common.Behavior
 
         private static void OnTextChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var textBox = dependencyObject as TextBox;
-            var newValue = (bool)e.NewValue;
+            bool newValue = (bool)e.NewValue;
 
-            if (textBox == null || (bool)e.OldValue == newValue)
+            if (dependencyObject is not TextBox textBox || (bool)e.OldValue == newValue)
             {
                 return;
             }

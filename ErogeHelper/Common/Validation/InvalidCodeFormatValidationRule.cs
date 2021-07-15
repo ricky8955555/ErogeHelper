@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Constant;
 
 namespace ErogeHelper.Common.Validation
 {
@@ -11,7 +11,7 @@ namespace ErogeHelper.Common.Validation
         {
             // HCode 0或1个/ H 1个以上任意字符 @ 1个以上十六进制 (: 1个以上任意字符)
             // RCode 0或1个/ RS@ 1个以上十六进制
-            const string patten = ConstraintValues.CodeRegExp;
+            const string patten = ConstantValues.CodeRegExp;
 
             var code = value as string;
 
