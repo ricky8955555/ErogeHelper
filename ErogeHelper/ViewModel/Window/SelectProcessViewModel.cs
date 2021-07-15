@@ -106,7 +106,7 @@ namespace ErogeHelper.ViewModel.Window
             _ = _gameWindowHooker.SetGameWindowHookAsync(gameProcess, gameProcesses.ToList());
 
             _ehDbRepository.Md5 = md5;
-            var settingJson = string.Empty;
+            string? settingJson = null;
             var gameInfo = await _ehDbRepository.GetGameInfoAsync().ConfigureAwait(false);
             if (gameInfo is not null)
             {

@@ -29,14 +29,12 @@ namespace ErogeHelper.Common.Converter
                         escapedXml.IndexOf("|~S~|", StringComparison.Ordinal))));
 
                     //between |~S~| and |~E~| is highlighted
-                    textBlock.Inlines.Add(new Run(escapedXml?.Substring(
-                            escapedXml.IndexOf("|~S~|", StringComparison.Ordinal) + 5,
-                            escapedXml.IndexOf("|~E~|", StringComparison.Ordinal) -
-                            (escapedXml.IndexOf("|~S~|", StringComparison.Ordinal) + 5)))
+                    textBlock.Inlines.Add(new Run(escapedXml?[
+                            (escapedXml.IndexOf("|~S~|", StringComparison.Ordinal) + 5)..escapedXml.IndexOf("|~E~|", StringComparison.Ordinal)])
                         {TextDecorations = TextDecorations.Strikethrough, Background = Brushes.Red});
 
                     //the rest of the string (after the |~E~|)
-                    escapedXml = escapedXml?.Substring(escapedXml.IndexOf("|~E~|", StringComparison.Ordinal) + 5);
+                    escapedXml = escapedXml?[(escapedXml.IndexOf("|~E~|", StringComparison.Ordinal) + 5)..];
                 }
 
                 if (escapedXml.Length > 0)

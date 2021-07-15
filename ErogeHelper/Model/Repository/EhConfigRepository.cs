@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using ErogeHelper.Common.Constant;
+using ErogeHelper.Common.Constraint;
 using System.Threading;
 using System.Threading.Tasks;
 using ErogeHelper.Common.Entity;

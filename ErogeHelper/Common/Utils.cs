@@ -132,12 +132,7 @@ namespace ErogeHelper.Common
             string begin = @"|~S~|";
             string end = @"|~E~|";
 
-            if (expr is null)
-            {
-                return sourceInput;
-            }
-
-            if (expr[^1] == '|')
+            if (string.IsNullOrEmpty(expr) || expr[^1] == '|')
             {
                 return sourceInput;
             }

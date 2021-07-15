@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ErogeHelper.Common;
-using ErogeHelper.Common.Constant;
+using ErogeHelper.Common.Constraint;
 
 namespace ErogeHelper.View.Dialog
 {

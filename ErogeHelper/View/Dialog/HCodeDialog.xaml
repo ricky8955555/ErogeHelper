@@ -8,7 +8,7 @@
                   xmlns:common="clr-namespace:ErogeHelper.Common"
                   xmlns:behavior="clr-namespace:ErogeHelper.Common.Behavior"
                   xmlns:validation="clr-namespace:ErogeHelper.Common.Validation"
-                  xmlns:constraint="clr-namespace:ErogeHelper.Common.Constant"
+                  xmlns:constraint="clr-namespace:ErogeHelper.Common.Constraint"
                   mc:Ignorable="d"
                   Title="{x:Static resx:Strings.HookPage_HookCode}"
                   CloseButtonText="{x:Static resx:Strings.HookPage_CodeSearchCancel}"

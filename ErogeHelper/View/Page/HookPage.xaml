@@ -11,7 +11,7 @@
       xmlns:dialog="clr-namespace:ErogeHelper.View.Dialog"
       xmlns:vm="clr-namespace:ErogeHelper.ViewModel.Page"
       xmlns:notifyItem="clr-namespace:ErogeHelper.ViewModel.Entity.NotifyItem"
-      xmlns:constraint="clr-namespace:ErogeHelper.Common.Constant"
+      xmlns:constraint="clr-namespace:ErogeHelper.Common.Constraint"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance vm:HookViewModel, IsDesignTimeCreatable=True}"
       cal:Bind.AtDesignTime="True" d:DesignHeight="800" d:DesignWidth="850"

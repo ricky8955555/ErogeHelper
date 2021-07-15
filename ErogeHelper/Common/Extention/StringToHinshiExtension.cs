@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using ErogeHelper.Common.Constant;
+using ErogeHelper.Common.Constraint;
 using ErogeHelper.Common.Enum;
 
 namespace ErogeHelper.Common.Extention

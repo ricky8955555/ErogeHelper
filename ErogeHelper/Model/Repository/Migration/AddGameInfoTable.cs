@@ -10,7 +10,7 @@ namespace ErogeHelper.Model.Repository.Migration
             Create.Table("GameInfo")
                 .WithColumn("Md5").AsString()
                 .WithColumn("GameIdList").AsString()
-                .WithColumn("RegExp").AsString()
+                .WithColumn("RegExp").AsString().Nullable()
                 .WithColumn("TextractorSettingJson").AsString()
                 .WithColumn("IsLoseFocus").AsBoolean()
                 .WithColumn("IsEnableTouchToMouse").AsBoolean();
