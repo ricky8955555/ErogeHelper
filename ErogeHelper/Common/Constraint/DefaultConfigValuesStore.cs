@@ -43,7 +43,7 @@ namespace ErogeHelper.Common.Constraint
 
         public const bool UseTermTable = false;
 
-        public const TransLanguage TransSrcLanguage = TransLanguage.日本語;
+        public const TransLanguage TransSrcLanguage = TransLanguage.Japanese;
         public const TransLanguage TransTargetLanguage = TransLanguage.English;
 
         public const bool AlapiEnable = false;

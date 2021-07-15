@@ -1,17 +1,4 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Common.Enum;
-using ErogeHelper.Common.Extention;
-using ErogeHelper.Common.Messenger;
-using ErogeHelper.Model.Entity.Response;
-using ErogeHelper.Model.Entity.Table;
-using ErogeHelper.Model.Repository;
-using ErogeHelper.Model.Service.Interface;
-using ErogeHelper.ViewModel.Window;
-using Microsoft.Extensions.DependencyInjection;
-using ModernWpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -20,6 +7,18 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using ErogeHelper.Common;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Common.Enum;
+using ErogeHelper.Common.Extention;
+using ErogeHelper.Common.Messenger;
+using ErogeHelper.Model.Entity.Table;
+using ErogeHelper.Model.Repository;
+using ErogeHelper.Model.Service.Interface;
+using ErogeHelper.ViewModel.Window;
+using Microsoft.Extensions.DependencyInjection;
+using ModernWpf;
 
 namespace ErogeHelper
 {
@@ -57,7 +56,7 @@ namespace ErogeHelper
 
             Log.Info($"Game's path: {gamePath}");
             Log.Info($"Locate Emulator status: {e.Args.Contains("/le") || e.Args.Contains("-le")}");
-            
+
             if (!Process.GetProcessesByName(Path.GetFileNameWithoutExtension(gamePath)).Any())
             {
                 if (e.Args.Any(str => str is "/le" or "-le"))
@@ -96,7 +95,7 @@ namespace ErogeHelper
                 }
             }
             IEnumerable<Process> gameProcesses = Utils.ProcessCollect(Path.GetFileNameWithoutExtension(gamePath));
-            
+
             var ehGlobalValueRepository = serviceProvider.GetRequiredService<GameRuntimeDataRepo>();
             var ehDbRepository = serviceProvider.GetRequiredService<EhDbRepository>();
 
@@ -174,11 +173,11 @@ namespace ErogeHelper
 
             if (serviceProvider.GetRequiredService<EhConfigRepository>().UseMoveableTextControl)
             {
-                await eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = true});
+                await eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = true });
             }
             else
             {
-                await eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = false});
+                await eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = false });
             }
 
             await eventAggregator.PublishOnUIThreadAsync(

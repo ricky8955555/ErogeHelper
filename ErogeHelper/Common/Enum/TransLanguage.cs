@@ -3,8 +3,8 @@
     public enum TransLanguage
     {
         Auto,
-        简体中文,
-        日本語,
+        SimplifiedChinese,
+        Japanese,
         English,
     }
 }

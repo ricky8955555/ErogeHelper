@@ -1,11 +1,11 @@
-﻿using ErogeHelper.Common.Entity;
+﻿using System.Collections.Generic;
+using ErogeHelper.Common.Entity;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Extention;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
 using MeCab;
 using MeCab.Extension.UniDic;
-using System.Collections.Generic;
 using WanaKanaNet;
 
 namespace ErogeHelper.Model.Service

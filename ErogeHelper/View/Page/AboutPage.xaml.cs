@@ -1,7 +1,7 @@
-﻿using ErogeHelper.View.Window;
-using ErogeHelper.ViewModel.Window;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
+using ErogeHelper.View.Window;
+using ErogeHelper.ViewModel.Window;
 
 namespace ErogeHelper.View.Page
 {

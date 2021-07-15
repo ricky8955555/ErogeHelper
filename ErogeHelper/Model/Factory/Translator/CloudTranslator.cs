@@ -1,13 +1,10 @@
-﻿using ErogeHelper.Common.Enum;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Interface;
 using ErogeHelper.Model.Repository;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ErogeHelper.Model.Factory.Translator
 {
@@ -30,9 +27,9 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public bool UnLock => true;
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語 };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文 };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
@@ -44,12 +41,12 @@ namespace ErogeHelper.Model.Factory.Translator
             // Define Support Language
             string from = srcLang switch
             {
-                TransLanguage.日本語 => "ja",
+                TransLanguage.Japanese => "ja",
                 _ => throw new Exception("Language not supported"),
             };
             string to = desLang switch
             {
-                TransLanguage.简体中文 => "zh-cn",
+                TransLanguage.SimplifiedChinese => "zh-cn",
                 _ => throw new Exception("Language not supported"),
             };
 

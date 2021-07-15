@@ -26,7 +26,7 @@ namespace ErogeHelper.Common.Behavior
 
         private static void SelectedTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (obj is not TextBox tb) 
+            if (obj is not TextBox tb)
                 return;
 
             if (e.OldValue == null && e.NewValue != null)

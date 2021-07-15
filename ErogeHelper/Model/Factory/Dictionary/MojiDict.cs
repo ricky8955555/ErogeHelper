@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using ErogeHelper.Model.Entity.Payload;
 using ErogeHelper.Model.Entity.Response;
+using ErogeHelper.Model.Factory.Interface;
 using RestSharp;
 using RestSharp.Serializers.SystemTextJson;
-using System.Threading;
-using System.Threading.Tasks;
-using ErogeHelper.Model.Factory.Interface;
 
 namespace ErogeHelper.Model.Factory.Dictionary
 {
@@ -52,7 +50,7 @@ namespace ErogeHelper.Model.Factory.Dictionary
                 return result;
             }
 
-            return new MojiSearchResponse {Error = "An error occurred, it may be bad token, or bad net request" };
+            return new MojiSearchResponse { Error = "An error occurred, it may be bad token, or bad net request" };
         }
 
         public async Task<MojiFetchResponse> FetchAsync(string tarId)

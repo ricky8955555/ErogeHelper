@@ -8,9 +8,9 @@ namespace ErogeHelper.Common.Constraint
             Utils.LoadBitmapFromResource("assets/text_background/transparent.png");
         public static readonly BitmapImage AquaGreenImage =
             Utils.LoadBitmapFromResource("assets/text_background/aqua_green.png");
-        public static readonly BitmapImage GreenImage = 
+        public static readonly BitmapImage GreenImage =
             Utils.LoadBitmapFromResource("assets/text_background/green.png");
-        public static readonly BitmapImage PinkImage = 
+        public static readonly BitmapImage PinkImage =
             Utils.LoadBitmapFromResource("assets/text_background/pink.png");
     }
 }

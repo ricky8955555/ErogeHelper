@@ -18,7 +18,7 @@ namespace ErogeHelper.Model.Factory.Dictionary
             var request = new RestRequest("api/v1/search/words", Method.GET)
                 .AddParameter("keyword", query);
 
-            var resp = 
+            var resp =
                 await client.ExecuteGetAsync<JishoResponse>(request, CancellationToken.None).ConfigureAwait(false);
 
             if (resp.Data is { } result)

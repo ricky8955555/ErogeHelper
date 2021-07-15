@@ -29,7 +29,7 @@ namespace ErogeHelper.View.Window
             {
                 switch (message.Action)
                 {
-                    case ViewAction.Hide: 
+                    case ViewAction.Hide:
                         Hide();
                         break;
                     case ViewAction.Close:

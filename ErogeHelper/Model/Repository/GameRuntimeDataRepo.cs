@@ -1,8 +1,9 @@
-﻿using ErogeHelper.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using ErogeHelper.Common;
 
 namespace ErogeHelper.Model.Repository
 {
@@ -15,7 +16,7 @@ namespace ErogeHelper.Model.Repository
             MainProcess = GameProcesses.FirstOrDefault(p => p.MainWindowHandle != IntPtr.Zero) ??
                            throw new InvalidOperationException();
             GamePath = MainProcess.MainModule?.FileName ?? string.Empty;
-            Md5 = Utils.GetFileMd5(GamePath);
+            Md5 = Utils.Md5Calculate(File.ReadAllBytes(GamePath));
 
             return (Md5, MainProcess);
         }

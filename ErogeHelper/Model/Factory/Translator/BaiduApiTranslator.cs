@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using ErogeHelper.Common;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Interface;
 using ErogeHelper.Model.Repository;
@@ -17,6 +14,10 @@ namespace ErogeHelper.Model.Factory.Translator
 {
     public class BaiduApiTranslator : ITranslator
     {
+        private static readonly string ApiUri = "http://api.fanyi.baidu.com/api/trans/vip/translate";
+        private static readonly HttpClient Client = new();
+        private static readonly Random Random = new();
+
         public BaiduApiTranslator(EhConfigRepository ehConfigRepository)
         {
             _ehConfigRepository = ehConfigRepository;
@@ -37,106 +38,48 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public string IconPath => @"/assets/site_icon/baidu.com.ico";
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語, TransLanguage.English };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese, TransLanguage.English };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文, TransLanguage.English };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese, TransLanguage.English };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
-            // SetCancelToken
-            _cancelToken.Cancel();
-            _cancelToken = new CancellationTokenSource();
-            var token = _cancelToken.Token;
-
-            // Define Support Language
-            string from = srcLang switch
-            {
-                TransLanguage.日本語 => "jp",
-                TransLanguage.English => "en",
-                _ => throw new Exception("Language not supported"),
-            };
-            string to = desLang switch
-            {
-                TransLanguage.简体中文 => "zh",
-                TransLanguage.English => "en",
-                _ => throw new Exception("Language not supported"),
-            };
-
             if (AppId == string.Empty)
             {
                 AppId = _ehConfigRepository.BaiduApiAppid;
                 SecretKey = _ehConfigRepository.BaiduApiSecretKey;
             }
 
-            string query = sourceText;
-            string salt = new Random().Next(100000).ToString();
-            string sign = EncryptString(AppId + query + salt + SecretKey);
-            StringBuilder urlBuilder = new();
-            urlBuilder
-                .Append("http://api.fanyi.baidu.com/api/trans/vip/translate?")
-                .Append("q=" + HttpUtility.UrlEncode(query))
-                .Append("&from=" + from)
-                .Append("&to=" + to)
-                .Append("&appid=" + AppId)
-                .Append("&salt=" + salt)
-                .Append("&sign=" + sign);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlBuilder.ToString());
-            request.Method = "GET";
-            request.ContentType = "text/html;charset=UTF-8";
-            request.UserAgent = null;
-            request.Timeout = 6000;
+            int salt = Random.Next(int.MaxValue);
+            string sign = Utils.Md5Calculate(AppId + sourceText + salt + SecretKey);
 
-            string result;
+            string query = $"q={HttpUtility.UrlEncode(sourceText)}&from={GetLanguage(srcLang)}&to={GetLanguage(desLang)}&appid={AppId}&salt={salt}&sign={sign}";
+            var uri = new UriBuilder(ApiUri) { Query = query }.Uri;
+
             try
             {
-                var response = await request.GetResponseAsync().ConfigureAwait(false);
+                var response = await Client.GetAsync(uri);
+                var result = await response.EnsureSuccessStatusCode().Content.ReadFromJsonAsync<BaiduApiResponse>();
 
-                Stream myResponseStream = response.GetResponseStream();
-                StreamReader myStreamReader = new(myResponseStream, Encoding.GetEncoding("utf-8"));
-                string retString = await myStreamReader.ReadToEndAsync();
-                myStreamReader.Close();
-                myResponseStream.Close();
-
-                var resp = JsonSerializer.Deserialize<BaiduApiResponse>(retString)!;
-                result = string.IsNullOrWhiteSpace(resp.ErrorCode) ? resp.TransResult[0].Dst : resp.ErrorCode;
+                return string.IsNullOrWhiteSpace(result!.ErrorCode) ? result.TransResult[0].Dst : result.ErrorCode;
             }
             catch (Exception ex)
             {
-                result = ex.Message;
+                return ex.Message;
             }
 
-            // Insert CancelAssert Before Return
-            if (token.IsCancellationRequested)
+            static string GetLanguage(TransLanguage language) => language switch
             {
-                Log.Debug($"{Name} Canceled");
-                return string.Empty;
-            }
-
-            return result;
+                TransLanguage.English => "en",
+                TransLanguage.SimplifiedChinese => "zh",
+                TransLanguage.Japanese => "jp",
+                _ => throw new NotSupportedException("Language not supported.")
+            };
         }
 
-        public string AppId;
-        public string SecretKey;
+        public string AppId { get; set; }
 
-        private static CancellationTokenSource _cancelToken = new();
-
-        private static string EncryptString(string str)
-        {
-            MD5 md5 = MD5.Create();
-            // 将字符串转换成字节数组
-            byte[] byteOld = Encoding.UTF8.GetBytes(str);
-            // 调用加密方法
-            byte[] byteNew = md5.ComputeHash(byteOld);
-            // 将加密结果转换为字符串
-            StringBuilder sb = new();
-            foreach (byte b in byteNew)
-            {
-                // 将字节转换成16进制表示的字符串，
-                sb.Append(b.ToString("x2"));
-            }
-            // 返回加密的字符串
-            return sb.ToString();
-        }
+        public string SecretKey { get; set; }
 
         private class BaiduApiResponse
         {

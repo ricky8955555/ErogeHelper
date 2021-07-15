@@ -11,7 +11,6 @@ using Caliburn.Micro;
 using ErogeHelper.Common;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Messenger;
-using ErogeHelper.Common.Extention;
 using ErogeHelper.Model.Service.Interface;
 
 namespace ErogeHelper.View.Window.Game
@@ -118,7 +117,7 @@ namespace ErogeHelper.View.Window.Game
         }
 
         private void ResizeGripper_DragDelta(object sender, DragDeltaEventArgs e)
-        {                                                     
+        {
             if (Width + e.HorizontalChange >= 100 && Width >= 100)
             {
                 Width += e.HorizontalChange;
@@ -139,7 +138,7 @@ namespace ErogeHelper.View.Window.Game
         // PreviewMouseLeftButtonDown
         private void WindowResize(object sender, MouseButtonEventArgs e)
         {
-            if (PresentationSource.FromVisual((Visual) sender) is not HwndSource hWndSource)
+            if (PresentationSource.FromVisual((Visual)sender) is not HwndSource hWndSource)
                 throw new ArgumentNullException($"hWndSource can not be null", nameof(hWndSource));
             NativeMethods.SendMessage(hWndSource.Handle, 0x112, (IntPtr)61448, IntPtr.Zero);
         }

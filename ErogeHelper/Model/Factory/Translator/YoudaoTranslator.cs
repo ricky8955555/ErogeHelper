@@ -29,9 +29,9 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public bool UnLock => true;
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語 };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文 };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
@@ -43,12 +43,12 @@ namespace ErogeHelper.Model.Factory.Translator
             // Define Support Language
             string from = srcLang switch
             {
-                TransLanguage.日本語 => "ja",
+                TransLanguage.Japanese => "ja",
                 _ => throw new Exception("Language not supported"),
             };
             string to = desLang switch
             {
-                TransLanguage.简体中文 => "zh_cn",
+                TransLanguage.SimplifiedChinese => "zh_cn",
                 _ => throw new Exception("Language not supported"),
             };
 

@@ -32,7 +32,7 @@ namespace ErogeHelper.Common.Behavior
                 return;
             }
 
-            static void Handler(object sender, TextChangedEventArgs _) => ((TextBox) sender).ScrollToEnd();
+            static void Handler(object sender, TextChangedEventArgs _) => ((TextBox)sender).ScrollToEnd();
 
             if (newValue)
             {

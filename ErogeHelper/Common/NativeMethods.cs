@@ -350,7 +350,7 @@ namespace ErogeHelper.Common
             [DllImport("user32.dll")]
             public static extern IntPtr GetMessageExtraInfo();
 
-            [DllImport("user32.dll", EntryPoint = "mouse_event", CharSet = CharSet.Auto, 
+            [DllImport("user32.dll", EntryPoint = "mouse_event", CharSet = CharSet.Auto,
                 CallingConvention = CallingConvention.StdCall)]
             public static extern void MouseEvent(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
 

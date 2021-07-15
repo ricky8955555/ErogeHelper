@@ -71,7 +71,7 @@ WHERE Md5 = @Md5";
         {
             string query =
                 "DELETE FROM GameInfo WHERE Md5=@Md5";
-            await _connection.ExecuteAsync(query, new {Md5}).ConfigureAwait(false);
+            await _connection.ExecuteAsync(query, new { Md5 }).ConfigureAwait(false);
         }
 
         public List<UserTermTable> GetUserTerms() =>

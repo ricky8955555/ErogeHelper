@@ -41,7 +41,7 @@ namespace ErogeHelper.Common.Extention
             // Enforce the capacity first so the head can be used instead of the entire segment (slow).
             while (_queue.Count + 1 > Capacity)
             {
-                if (_queue.TryDequeue(out _)) 
+                if (_queue.TryDequeue(out _))
                     continue;
 
                 // Handle error condition however you want to ie throw, return validation object, etc.

@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Caliburn.Micro;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
 

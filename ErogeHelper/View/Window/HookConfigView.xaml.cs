@@ -1,11 +1,11 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Caliburn.Micro;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Messenger;
 using ErogeHelper.View.Page;
 using ErogeHelper.ViewModel.Window;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 
 namespace ErogeHelper.View.Window
@@ -20,7 +20,7 @@ namespace ErogeHelper.View.Window
             InitializeComponent();
 
             _eventAggregator = IoC.Get<IEventAggregator>();
-            
+
             _eventAggregator.SubscribeOnUIThread(this);
             HookPageFrame.LoadCompleted += (_, _) => _eventAggregator.SubscribeOnUIThread(HookPageFrame.Content as HookPage);
         }

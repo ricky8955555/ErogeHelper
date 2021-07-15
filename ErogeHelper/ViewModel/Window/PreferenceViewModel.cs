@@ -1,5 +1,4 @@
-﻿using System;
-using ErogeHelper.ViewModel.Page;
+﻿using ErogeHelper.ViewModel.Page;
 
 namespace ErogeHelper.ViewModel.Window
 {

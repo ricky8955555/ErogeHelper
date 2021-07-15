@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
 using Caliburn.Micro;
 using ErogeHelper.Common;
 using ErogeHelper.Common.Entity;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Extention;
 using ErogeHelper.Common.Messenger;
-using ErogeHelper.Model.Entity.Response;
+using ErogeHelper.Model.Entity.Table;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
 using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
-using ErogeHelper.Model.Entity.Table;
-using System.Threading.Tasks;
 
 namespace ErogeHelper.ViewModel.Window
 {

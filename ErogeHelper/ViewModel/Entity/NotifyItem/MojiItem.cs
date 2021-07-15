@@ -12,7 +12,7 @@ namespace ErogeHelper.ViewModel.Entity.NotifyItem
         public string TarId { get; set; } = string.Empty;
         public string Pron { get => _pron; set { _pron = value; NotifyOfPropertyChange(() => Pron); } }
         public string Title { get => _title; set { _title = value; NotifyOfPropertyChange(() => Title); } }
-        public BindableCollection<MojiExpanderItem> ExpanderCollection 
+        public BindableCollection<MojiExpanderItem> ExpanderCollection
         { get => _expanderCollection; set { _expanderCollection = value; NotifyOfPropertyChange(() => ExpanderCollection); } }
     }
 }

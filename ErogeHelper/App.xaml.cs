@@ -1,11 +1,11 @@
-﻿using ErogeHelper.Common.Function;
-using Ookii.Dialogs.Wpf;
-using Serilog;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using ErogeHelper.Common.Function;
+using Ookii.Dialogs.Wpf;
+using Serilog;
 
 namespace ErogeHelper
 {

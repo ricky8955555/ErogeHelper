@@ -1,22 +1,22 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Caliburn.Micro;
 using ErogeHelper.Common;
+using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Extention;
 using ErogeHelper.Common.Messenger;
+using ErogeHelper.Model.Entity.Table;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
 using ErogeHelper.View.Window;
 using ErogeHelper.ViewModel.Control;
 using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using WindowsInput.Events;
-using ErogeHelper.Model.Entity.Table;
-using ErogeHelper.Common.Enum;
-using System.Windows.Controls;
 using WPFDanmakuLib;
 using Utils = ErogeHelper.Common.Utils;
 
@@ -80,7 +80,7 @@ namespace ErogeHelper.ViewModel.Window
         private Visibility _insideTextVisibility;
         private Visibility _insideMoveableTextVisibility;
         private Visibility _outsideJapaneseVisible;
-        
+
         public TextViewModel TextControl { get; set; }
         public BindableCollection<AppendTextItem> AppendTextList { get; set; } = new();
 
@@ -447,7 +447,7 @@ namespace ErogeHelper.ViewModel.Window
         }
 
         private void ToastDanmaku(string danmakuText)
-        { 
+        {
             if (_danmakuContainer is null || string.IsNullOrWhiteSpace(danmakuText))
             {
                 return;

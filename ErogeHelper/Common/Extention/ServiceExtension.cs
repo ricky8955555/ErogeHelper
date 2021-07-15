@@ -1,4 +1,7 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.IO;
+using System.Linq;
+using Caliburn.Micro;
 using ErogeHelper.Model.Factory;
 using ErogeHelper.Model.Factory.Interface;
 using ErogeHelper.Model.Repository;
@@ -9,9 +12,6 @@ using ErogeHelper.ViewModel.Window;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.IO;
-using System.Linq;
 using Serilog;
 using WK.Libraries.SharpClipboardNS;
 
@@ -28,7 +28,7 @@ namespace ErogeHelper.Common.Extention
 
             // https://github.com/fluentmigrator/fluentmigrator/issues/1450
             Log.Info("Fine FileNotFoundExceptions in CLR");
-            runner.MigrateUp(); 
+            runner.MigrateUp();
         }
 
         public static IServiceCollection AddViewModels(this IServiceCollection services, Type types)

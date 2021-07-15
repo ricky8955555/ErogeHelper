@@ -22,8 +22,8 @@ namespace ErogeHelper.Common.Extention
             var source = PresentationSource.FromVisual(window);
             var dpi = source?.CompositionTarget?.TransformFromDevice.M11 ?? 1.0;
 
-            window.Left = dpi * area.Left + (dpi * area.Width - window.Width) / 2;
-            window.Top = dpi * area.Top + (dpi * area.Height - window.Height) / 2;
+            window.Left = (dpi * area.Left) + (((dpi * area.Width) - window.Width) / 2);
+            window.Top = (dpi * area.Top) + (((dpi * area.Height) - window.Height) / 2);
         }
     }
 }

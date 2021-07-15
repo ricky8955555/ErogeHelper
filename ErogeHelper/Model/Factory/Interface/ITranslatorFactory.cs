@@ -5,9 +5,9 @@ namespace ErogeHelper.Model.Factory.Interface
 {
     public interface ITranslatorFactory
     {
-        List<ITranslator> AllInstance { get; }
+        ITranslator[] Translators { get; }
 
-        List<ITranslator> GetEnabledTranslators();
+        IEnumerable<ITranslator> GetEnabledTranslators();
 
         ITranslator GetTranslator(TranslatorName name);
     }

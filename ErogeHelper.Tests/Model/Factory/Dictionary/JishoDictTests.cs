@@ -1,7 +1,7 @@
-﻿using ErogeHelper.Model.Entity.Response;
+﻿using System.Threading.Tasks;
+using ErogeHelper.Model.Entity.Response;
 using ErogeHelper.Model.Factory.Dictionary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 
 namespace ErogeHelper.Tests.Model.Factory.Dictionary
 {

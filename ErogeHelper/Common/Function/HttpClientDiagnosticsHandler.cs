@@ -31,8 +31,8 @@ namespace ErogeHelper.Common.Function
             var response = await base.SendAsync(request, cancellationToken);
 
             Log.Debug($"Response: {response}");
-                var respContent = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                Log.Debug($"Response Content: {respContent}");
+            var respContent = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            Log.Debug($"Response Content: {respContent}");
 
             responseElapsedTime.Stop();
             Log.Debug($"Response elapsed time: {responseElapsedTime.ElapsedMilliseconds} ms");

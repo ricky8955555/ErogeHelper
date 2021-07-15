@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ErogeHelper.Installer
 {
     class ExplorerHelper
     {
-        public static List<string> Paths = new ();
+        public static List<string> Paths = new();
 
         #region Win32 Apis
         private delegate bool CallBack(int hwnd, int y);
@@ -96,7 +94,7 @@ namespace ErogeHelper.Installer
         {
             foreach (var dir in Paths)
             {
-                Process.Start(new ProcessStartInfo() 
+                Process.Start(new ProcessStartInfo()
                 {
                     FileName = "explorer",
                     Arguments = dir

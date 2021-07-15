@@ -43,10 +43,10 @@ namespace ErogeHelper.ViewModel.Page
         private TransLanguage _selectedTarLang;
         private BindableCollection<LanguageComboBoxItem> _targetLanguageList = new();
 
-        public bool UserTermStatus 
-        { 
-            get => _ehConfigRepository.UseTermTable; 
-            set => _ehConfigRepository.UseTermTable = value; 
+        public bool UserTermStatus
+        {
+            get => _ehConfigRepository.UseTermTable;
+            set => _ehConfigRepository.UseTermTable = value;
         }
 
         public async void OpenTermList() => await _windowManager.ShowDialogFromIoCAsync<TermViewModel>();
@@ -110,12 +110,12 @@ namespace ErogeHelper.ViewModel.Page
         {
             if (reset)
             {
-                _translatorFactory.AllInstance.ForEach(translator => translator.IsEnable = false);
+                _translatorFactory.Translators.ForEach(translator => translator.IsEnable = false);
             }
             TranslatorList.Clear();
 
             foreach (var translatorItem in
-                from translator in _translatorFactory.AllInstance
+                from translator in _translatorFactory.Translators
                 where translator.SupportSrcLang.Contains(SelectedSrcLang) && translator.SupportDesLang.Contains(SelectedTarLang)
                 select new TranslatorItem
                 {
@@ -135,7 +135,7 @@ namespace ErogeHelper.ViewModel.Page
         {
             BindableCollection<LanguageComboBoxItem> langList = new();
             foreach (var lang in new HashSet<TransLanguage>(
-                _translatorFactory.AllInstance.SelectMany(translator => translator.SupportSrcLang)))
+                _translatorFactory.Translators.SelectMany(translator => translator.SupportSrcLang)))
             {
                 langList.Add(new LanguageComboBoxItem(lang));
             }
@@ -147,7 +147,7 @@ namespace ErogeHelper.ViewModel.Page
             BindableCollection<LanguageComboBoxItem> langList = new();
             tmpMark = new Dictionary<TransLanguage, bool>();
             foreach (var lang in
-                _translatorFactory.AllInstance
+                _translatorFactory.Translators
                     .Where(translator => translator.SupportSrcLang.Contains(SelectedSrcLang))
                     .SelectMany(translator => translator.SupportDesLang))
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -31,9 +30,9 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public bool UnLock => _ehConfigRepository.TencentMtSecretId != string.Empty;
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語 };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文 };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
@@ -45,12 +44,12 @@ namespace ErogeHelper.Model.Factory.Translator
             // Define Support Language
             string source = srcLang switch
             {
-                TransLanguage.日本語 => "ja",
+                TransLanguage.Japanese => "ja",
                 _ => throw new Exception("Language not supported"),
             };
             string target = desLang switch
             {
-                TransLanguage.简体中文 => "zh",
+                TransLanguage.SimplifiedChinese => "zh",
                 _ => throw new Exception("Language not supported"),
             };
 

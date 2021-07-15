@@ -1,17 +1,15 @@
-﻿using ErogeHelper.Common.Entity;
-using ErogeHelper.Model.Repository;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ErogeHelper.Model.Entity.Table;
-using ErogeHelper.Model.Repository.Migration;
+using ErogeHelper.Common.Entity;
 using ErogeHelper.Common.Extention;
+using ErogeHelper.Model.Entity.Table;
+using ErogeHelper.Model.Repository;
+using ErogeHelper.Model.Repository.Migration;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ErogeHelper.Tests.Model.Repository
 {
@@ -24,7 +22,7 @@ namespace ErogeHelper.Tests.Model.Repository
             // Arrange 
             var dbFile = Path.Combine(TestEnvironmentValue.RoamingDir, "ErogeHelper", "eh.db");
             var connectString = $"Data Source={dbFile}";
-            var ehDbRepo = new EhDbRepository(connectString) {Md5 = "0123456789ABCDEF0123456789ABCDEF"};
+            var ehDbRepo = new EhDbRepository(connectString) { Md5 = "0123456789ABCDEF0123456789ABCDEF" };
             if (!File.Exists(dbFile))
                 CreateDb(connectString);
 
@@ -43,7 +41,7 @@ namespace ErogeHelper.Tests.Model.Repository
             var dbFile = Path.Combine(TestEnvironmentValue.RoamingDir, "ErogeHelper", "eh.db");
             var connectString = $"Data Source={dbFile}";
             var fakeMd5 = "0123456789ABCDEF0123456789ABCDEF";
-            var ehDbRepo = new EhDbRepository(connectString) {Md5 = fakeMd5 };
+            var ehDbRepo = new EhDbRepository(connectString) { Md5 = fakeMd5 };
             var fakeIdList = "1,2,3";
             var textractorSetting = new TextractorSetting
             {

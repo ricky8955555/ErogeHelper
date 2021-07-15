@@ -1,9 +1,9 @@
-﻿using ErogeHelper.Common;
-using ErogeHelper.Model.Service.Interface;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ErogeHelper.Common;
+using ErogeHelper.Model.Service.Interface;
 
 namespace ErogeHelper.Model.Service
 {

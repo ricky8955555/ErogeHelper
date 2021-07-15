@@ -31,7 +31,7 @@ namespace ErogeHelper.Common.Converter
                     //between |~S~| and |~E~| is highlighted
                     textBlock.Inlines.Add(new Run(escapedXml?[
                             (escapedXml.IndexOf("|~S~|", StringComparison.Ordinal) + 5)..escapedXml.IndexOf("|~E~|", StringComparison.Ordinal)])
-                        {TextDecorations = TextDecorations.Strikethrough, Background = Brushes.Red});
+                    { TextDecorations = TextDecorations.Strikethrough, Background = Brushes.Red });
 
                     //the rest of the string (after the |~E~|)
                     escapedXml = escapedXml?[(escapedXml.IndexOf("|~E~|", StringComparison.Ordinal) + 5)..];

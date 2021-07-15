@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Caliburn.Micro;
 using ErogeHelper.Common;
-using ErogeHelper.Model.Repository;
 using UpdateChecker;
 using UpdateChecker.VersionComparers;
 
@@ -14,17 +13,17 @@ namespace ErogeHelper.ViewModel.Page
     {
         public AboutViewModel()
         {
-            Task.Run(async() => await CheckUpdateAsync().ConfigureAwait(false));
+            Task.Run(async () => await CheckUpdateAsync().ConfigureAwait(false));
         }
 
         private string _checkUpdateStatus = "Check update ...";
         private Brush _brushColor = Brushes.Gray;
         private bool _canJumpRelease;
-        public Brush BrushColor 
+        public Brush BrushColor
         { get => _brushColor; set { _brushColor = value; NotifyOfPropertyChange(() => BrushColor); } }
-        public string CheckUpdateStatus 
+        public string CheckUpdateStatus
         { get => _checkUpdateStatus; set { _checkUpdateStatus = value; NotifyOfPropertyChange(() => CheckUpdateStatus); } }
-        public bool CanJumpRelease 
+        public bool CanJumpRelease
         { get => _canJumpRelease; set { _canJumpRelease = value; NotifyOfPropertyChange(() => CanJumpRelease); } }
 
         private async Task CheckUpdateAsync()

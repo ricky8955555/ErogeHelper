@@ -1,15 +1,15 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common.Enum;
-using ErogeHelper.Common.Messenger;
-using ModernWpf.Controls;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Caliburn.Micro;
+using ErogeHelper.Common.Enum;
+using ErogeHelper.Common.Messenger;
 using ErogeHelper.View.Window;
 using ErogeHelper.ViewModel.Window;
+using ModernWpf.Controls;
 
 namespace ErogeHelper.View.Page
 {

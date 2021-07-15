@@ -13,7 +13,7 @@ namespace ErogeHelper.Tests.Common
         {
             var notepadPath = @"C:\WINDOWS\system32\notepad.exe";
             var dict = Utils.GetGameNamesByPath(notepadPath);
-            
+
             Assert.AreEqual("notepad.exe", dict["File"]);
             Assert.AreEqual("system32", dict["Dir"]);
             Assert.AreEqual("notepad", dict["FileNoExt"]);

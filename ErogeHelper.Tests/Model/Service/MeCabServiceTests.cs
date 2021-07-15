@@ -47,7 +47,7 @@ namespace ErogeHelper.Tests.Model.Service
             Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[5].PartOfSpeech);
             Assert.AreEqual("汲み取る", list[6].Word);
             //Assert.AreEqual("くみとる", list[6].Kana);
-            Assert.AreEqual(JapanesePartOfSpeech.Verb, list[6].PartOfSpeech); 
+            Assert.AreEqual(JapanesePartOfSpeech.Verb, list[6].PartOfSpeech);
             Assert.AreEqual("の", list[7].Word);
             Assert.AreEqual(" ", list[7].Kana);
             Assert.AreEqual(JapanesePartOfSpeech.Auxiliary, list[7].PartOfSpeech);

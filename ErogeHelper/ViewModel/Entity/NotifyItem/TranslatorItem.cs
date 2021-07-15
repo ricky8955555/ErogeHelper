@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Interface;
 
@@ -14,7 +12,7 @@ namespace ErogeHelper.ViewModel.Entity.NotifyItem
         public bool CanBeEnable
         {
             get => _canBeEnable;
-            set { _canBeEnable = value; NotifyOfPropertyChange(() => CanBeEnable);}
+            set { _canBeEnable = value; NotifyOfPropertyChange(() => CanBeEnable); }
         }
 
         public bool Enable

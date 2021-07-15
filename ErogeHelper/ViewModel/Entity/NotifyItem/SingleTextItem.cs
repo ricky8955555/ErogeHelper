@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using ErogeHelper.Common.Constraint;
 using ErogeHelper.Common.Enum;
 
@@ -13,7 +12,7 @@ namespace ErogeHelper.ViewModel.Entity.NotifyItem
             Text = text;
             TextTemplateType = templateType;
             SubMarkColor = backgroundColor;
-            
+
             CanBeSearch = backgroundColor != StaticXamlBitmapImage.TransparentImage;
         }
 

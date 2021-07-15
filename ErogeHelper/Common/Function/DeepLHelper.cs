@@ -69,7 +69,7 @@ namespace ErogeHelper.Common.Function
                         {
                             new NotificationToast(
                                     "Clipboard is detected to be occupied by other programs, " +
-                                    "try to close those apps or restart computer to get better experience", 
+                                    "try to close those apps or restart computer to get better experience",
                                     "10")
                                 .Show();
                             _notifyOnce = false;

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Interface;
@@ -22,12 +19,9 @@ namespace ErogeHelper.Model.Factory.Translator
         {
             _ehConfigRepository = ehConfigRepository;
 
-            // 创建HttpClientHandler以先行获取cookie
-            _cookieContainer = new CookieContainer();
             _client = new HttpClient(new HttpClientHandler
             {
-                AutomaticDecompression = DecompressionMethods.GZip,
-                CookieContainer = _cookieContainer
+                AutomaticDecompression = DecompressionMethods.GZip
             })
             {
                 Timeout = TimeSpan.FromSeconds(6)
@@ -46,130 +40,88 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public bool UnLock => true;
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語, TransLanguage.English };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese, TransLanguage.English };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文, TransLanguage.English };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese, TransLanguage.English };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
-            #region SetCancelToken
-            _cts.Cancel();
-            _cts = new CancellationTokenSource();
-            var cancelToken = _cts.Token;
-            #endregion
-
-            #region Define Suppdort Language
-            string from = srcLang switch
-            {
-                TransLanguage.日本語 => "jp",
-                TransLanguage.English => "en",
-                _ => throw new Exception("Language not supported"),
-            };
-            string to = desLang switch
-            {
-                TransLanguage.简体中文 => "zh",
-                TransLanguage.English => "en",
-                _ => throw new Exception("Language not supported"),
-            };
-            #endregion
-
-            string result;
             try
             {
                 var uri = new Uri(BaseUrl);
 
-                // Do request to get cookies
-                if (_sbCookie.ToString() == string.Empty)
+                string? gtk = null;
+                string? token = null;
+
+                if (_firstRequest)
                 {
-                    await _client.GetAsync(uri, CancellationToken.None);
-                    List<Cookie> cookies = _cookieContainer.GetCookies(uri).ToList();
-                    foreach (var item in cookies)
-                    {
-                        _sbCookie.Append(item.Name);
-                        _sbCookie.Append('=');
-                        _sbCookie.Append(item.Value);
-                        _sbCookie.Append(';');
-                    }
+                    await _client.GetStringAsync(TransUrl);
+                    _firstRequest = false;
                 }
 
-                string gtk = string.Empty;
-                string token = string.Empty;
-                string content = await _client.GetStringAsync(TransUrl, CancellationToken.None);
+                string content = await _client.GetStringAsync(TransUrl);
+
                 var tokenMatch = Regex.Match(content, "token: '(.*?)',");
                 var gtkMatch = Regex.Match(content, "window.gtk = '(.*?)';");
+
                 if (gtkMatch.Success && gtkMatch.Groups.Count > 1)
                     gtk = gtkMatch.Groups[1].Value;
                 if (tokenMatch.Success && tokenMatch.Groups.Count > 1)
                     token = tokenMatch.Groups[1].Value;
-                _jsEngine.Evaluate(JsBaiduToken);
+
+                _jsEngine.Evaluate(TokenCalculatingJs);
                 string sign = _jsEngine.CallGlobalFunction<string>("token", sourceText, gtk);
 
-                var values = new List<KeyValuePair<string?, string?>>
+                var values = new Dictionary<string, string?>()
                 {
-                    new("from", from),
-                    new("to", to),
-                    new("query", sourceText),
-                    new("transtype", "translang"),
-                    new("simple_means_flag", "3"),
-                    new("sign", sign),
-                    new("token", token),
+                    { "from", GetLanguage(srcLang) },
+                    { "to", GetLanguage(desLang) },
+                    { "query", sourceText },
+                    { "transtype", "translang" },
+                    { "simple_means_flag", "3" },
+                    { "sign", sign },
+                    { "token", token },
                 };
-                var data = new FormUrlEncodedContent(values);
 
-                var response = await _client.PostAsync(ServiceUrl, data, CancellationToken.None);
+                var data = new FormUrlEncodedContent(values!);
+                var response = await _client.PostAsync(ServiceUrl, data);
                 response.EnsureSuccessStatusCode();
 
-                var resp = await response.Content.ReadFromJsonAsync<BaiduWebResponse>(cancellationToken:CancellationToken.None);
+                var result = await response.Content.ReadFromJsonAsync<BaiduWebResponse>();
 
-                if (resp is null)
+                if (result is null)
                 {
-                    return "NullBaiduWebResponseException";
+                    throw new HttpRequestException();
                 }
 
-                result = resp.TransResult.Data[0].Dst;
+                return result.TransResult.Data[0].Dst;
             }
             catch (HttpRequestException ex)
             {
-                Log.Warn(ex.Message);
-                result = "Bad connection";
-            }
-            catch (TaskCanceledException ex)
-            {
-                Log.Warn(ex.Message);
-                result = "Bad net requests";
-            }
-            catch (Exception ex)
-            {
-                Log.Warn(ex.Message);
-                result = ex.Message;
+                Log.Warn(ex.ToString());
+                return ex.Message;
             }
 
-            #region Insert CancelAssert Before Any Return
-            if (cancelToken.IsCancellationRequested)
+            static string GetLanguage(TransLanguage language) => language switch
             {
-                Log.Debug($"{Name} Canceled");
-                result = string.Empty;
-            }
-            #endregion
-
-            return result;
+                TransLanguage.English => "en",
+                TransLanguage.SimplifiedChinese => "zh",
+                TransLanguage.Japanese => "jp",
+                _ => throw new NotSupportedException("Language not supported.")
+            };
         }
 
-        private readonly HttpClient _client;
+        private bool _firstRequest = true;
 
-        private static CancellationTokenSource _cts = new();
+        private readonly HttpClient _client;
 
         private const string BaseUrl = @"https://www.baidu.com";
         private const string TransUrl = @"https://fanyi.baidu.com";
         private const string ServiceUrl = @"https://fanyi.baidu.com/v2transapi";
 
-        private readonly StringBuilder _sbCookie = new();
-
-        private readonly CookieContainer _cookieContainer;
-
         private readonly ScriptEngine _jsEngine = new();
 
-        private const string JsBaiduToken = @"
+        private static readonly string TokenCalculatingJs = @"
 function a(r, o) {
     for (var t = 0; t < o.length - 2; t += 3) {
         var a = o.charAt(t + 2);

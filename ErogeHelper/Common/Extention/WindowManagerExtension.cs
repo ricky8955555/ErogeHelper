@@ -1,6 +1,6 @@
-﻿using Caliburn.Micro;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace ErogeHelper.Common.Extention
 {

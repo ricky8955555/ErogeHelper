@@ -1,11 +1,10 @@
-﻿using ModernWpf.Controls;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ErogeHelper.Common;
 using ErogeHelper.Common.Constraint;
+using ModernWpf.Controls;
 
 namespace ErogeHelper.View.Dialog
 {
@@ -120,9 +119,9 @@ namespace ErogeHelper.View.Dialog
             if (sender is TextBox codeTextBox)
             {
                 if (codeTextBox.Text[^1] == ':')
-                { 
+                {
                     IsPrimaryButtonEnabled = false;
-                    return ;
+                    return;
                 }
                 IsPrimaryButtonEnabled = Regex.IsMatch(codeTextBox.Text, patten);
             }

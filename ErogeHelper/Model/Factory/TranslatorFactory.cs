@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Interface;
-using ErogeHelper.Model.Factory.Translator;
 using ErogeHelper.Model.Repository;
 
 namespace ErogeHelper.Model.Factory
@@ -13,38 +12,26 @@ namespace ErogeHelper.Model.Factory
     {
         public TranslatorFactory(EhConfigRepository ehConfigRepository)
         {
-            //AllInstance = new List<ITranslator>
-            //{
-            //    new BaiduApiTranslator(ehConfigRepository),
-            //    new YeekitTranslator(ehConfigRepository),
-            //    new BaiduWebTranslator(ehConfigRepository),
-            //    new CaiyunTranslator(ehConfigRepository),
-            //    new CloudTranslator(ehConfigRepository),
-            //    //new AlapiTranslator(ehConfigRepository),
-            //    new YoudaoTranslator(ehConfigRepository),
-            //    new NiuTransTranslator(ehConfigRepository),
-            //    new GoogleCnTranslator(ehConfigRepository),
-            //    new TencentMtTranslator(ehConfigRepository),
-            //};
-
             var types = Assembly.GetExecutingAssembly().GetTypes();
             var interfaceType = typeof(ITranslator);
-            var translatorTypes = types.Where(type => type.IsClass && interfaceType.IsAssignableFrom(type));
+            var translatorTypes = types.Where(
+                type => type.IsClass &&
+                interfaceType.IsAssignableFrom(type) &&
+                !type.CustomAttributes.Any(attribute => attribute.AttributeType == typeof(ObsoleteAttribute)));
 
             var translators = translatorTypes
                 .Select(type => type.GetConstructors()[0].Invoke(new object[] { ehConfigRepository }))
                 .Cast<ITranslator>();
 
-            AllInstance = new List<ITranslator>(translators);
+            Translators = translators.ToArray();
         }
 
-        public List<ITranslator> AllInstance { get; }
+        public ITranslator[] Translators { get; }
 
-        public List<ITranslator> GetEnabledTranslators() => AllInstance.Where(translator => translator.IsEnable).ToList();
+        public IEnumerable<ITranslator> GetEnabledTranslators() => Translators.Where(translator => translator.IsEnable);
 
-        // QUESTION: 类似这样的Exception没法catch？
         public ITranslator GetTranslator(TranslatorName name) =>
-            AllInstance.SingleOrDefault(translator => translator.Name == name) ??
-            throw new Exception($"No translator {name}");
+            Translators.FirstOrDefault(translator => translator.Name == name) ??
+            throw new InvalidOperationException($"No translator {name}.");
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory;
 using ErogeHelper.Model.Factory.Dictionary;

@@ -1,5 +1,5 @@
-﻿using ErogeHelper.Common.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ErogeHelper.Common.Entity;
 using ErogeHelper.Model.Repository;
 
 namespace ErogeHelper.Model.Service.Interface

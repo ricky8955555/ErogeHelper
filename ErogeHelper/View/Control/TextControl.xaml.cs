@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -32,7 +31,7 @@ namespace ErogeHelper.View.Control
 
         private void Border_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is not Border border) 
+            if (sender is not Border border)
                 return;
 
             border.ClearValue(EffectProperty);

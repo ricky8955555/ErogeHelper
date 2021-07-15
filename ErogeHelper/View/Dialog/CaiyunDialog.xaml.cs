@@ -1,9 +1,9 @@
-﻿using Caliburn.Micro;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Caliburn.Micro;
 using ErogeHelper.Common.Constraint;
 using ErogeHelper.Model.Repository;
 using ModernWpf.Controls;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace ErogeHelper.View.Dialog
 {

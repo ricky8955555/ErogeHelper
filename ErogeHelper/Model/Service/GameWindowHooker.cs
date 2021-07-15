@@ -1,13 +1,13 @@
-﻿using ErogeHelper.Common;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Model.Service.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using ErogeHelper.Common;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Model.Service.Interface;
 
 namespace ErogeHelper.Model.Service
 {

@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using ErogeHelper.Model;
 using ErogeHelper.Model.Repository;
 using ModernWpf.Controls;
 

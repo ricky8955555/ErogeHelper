@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -59,11 +58,11 @@ namespace ErogeHelper.Model.Service
             }
         }
 
-        public void SendNewText(string text) => ProcessDataText(new HookParam() {Text = text});
+        public void SendNewText(string text) => ProcessDataText(new HookParam() { Text = text });
 
         public GameDataService(
             IMeCabService meCabService,
-            ITextractorService textractorService, 
+            ITextractorService textractorService,
             EhConfigRepository ehConfigRepository,
             ITranslatorFactory translatorFactory,
             ITermDataService termDataService,
@@ -84,7 +83,7 @@ namespace ErogeHelper.Model.Service
             _sharpClipboard.ClipboardChanged += (_, e) =>
             {
                 if (_ehConfigRepository.MonitorClipboard && e.ContentType == SharpClipboard.ContentTypes.Text)
-                    ProcessDataText(new HookParam() {Text = _sharpClipboard.ClipboardText} );
+                    ProcessDataText(new HookParam() { Text = _sharpClipboard.ClipboardText });
             };
             _eventAggregator.SubscribeOnUIThread(this);
             textractorService.SelectedDataEvent += ProcessDataText;

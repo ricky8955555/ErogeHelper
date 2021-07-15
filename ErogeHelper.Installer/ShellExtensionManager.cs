@@ -1,10 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ErogeHelper.Installer
 {
@@ -16,7 +10,7 @@ namespace ErogeHelper.Installer
         public static bool IsInstalled()
         {
             var rootName = Registry.ClassesRoot;
-            
+
             return rootName.OpenSubKey(friendlyName, false) != null;
         }
     }

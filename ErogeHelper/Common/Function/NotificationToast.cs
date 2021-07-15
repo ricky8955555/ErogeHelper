@@ -33,7 +33,7 @@ namespace ErogeHelper.Common.Function
             RunPowerShellScript(_baseScript);
             return true;
         }
-        
+
         public async Task<bool> ShowAsync() =>
             await Task.Run(() =>
             {
@@ -59,9 +59,9 @@ namespace ErogeHelper.Common.Function
         {
             if (File.Exists(PowerShellPath))
             {
-                if (CheckPowerShellVersionNumber()) 
+                if (CheckPowerShellVersionNumber())
                     return true;
-                
+
                 Log.Info("PowerShell version is lower than v5.0");
                 return false;
             }

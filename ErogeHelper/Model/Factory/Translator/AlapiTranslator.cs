@@ -9,9 +9,9 @@ using RestSharp;
 
 namespace ErogeHelper.Model.Factory.Translator
 {
+    [Obsolete("翻译接口关闭")]
     public class AlapiTranslator : ITranslator
     {
-        [Obsolete("翻译接口关闭")]
         public AlapiTranslator(EhConfigRepository ehConfigRepository)
         {
             _ehConfigRepository = ehConfigRepository;
@@ -29,9 +29,9 @@ namespace ErogeHelper.Model.Factory.Translator
 
         public bool UnLock => true;
 
-        public List<TransLanguage> SupportSrcLang => new() { TransLanguage.日本語 };
+        public TransLanguage[] SupportSrcLang { get; } = new TransLanguage[] { TransLanguage.Japanese };
 
-        public List<TransLanguage> SupportDesLang => new() { TransLanguage.简体中文 };
+        public TransLanguage[] SupportDesLang { get; } = new TransLanguage[] { TransLanguage.SimplifiedChinese };
 
         public async Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang)
         {
@@ -44,12 +44,12 @@ namespace ErogeHelper.Model.Factory.Translator
             // Doc: https://www.alapi.cn/doc/show/32.html
             string from = srcLang switch
             {
-                TransLanguage.日本語 => "jp",
+                TransLanguage.Japanese => "jp",
                 _ => throw new Exception("Language not supported"),
             };
             string to = desLang switch
             {
-                TransLanguage.简体中文 => "zh",
+                TransLanguage.SimplifiedChinese => "zh",
                 _ => throw new Exception("Language not supported"),
             };
 

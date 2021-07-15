@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ErogeHelper.Common.Enum
+﻿namespace ErogeHelper.Common.Enum
 {
     public enum MousePointPosition
     {
@@ -51,7 +45,7 @@ namespace ErogeHelper.Common.Enum
         /// <summary>
         /// 拉伸右下角
         /// </summary>
-        MouseSizeBottomRight = 8,       
+        MouseSizeBottomRight = 8,
 
         /// <summary>
         /// 鼠标拖动

@@ -1,13 +1,12 @@
-﻿using ErogeHelper.View.Page;
-using ModernWpf.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Messenger;
-using ErogeHelper.ViewModel.Window;
+using ErogeHelper.View.Page;
+using ModernWpf.Controls;
 using WindowPage = System.Windows.Controls.Page;
 
 namespace ErogeHelper.View.Window

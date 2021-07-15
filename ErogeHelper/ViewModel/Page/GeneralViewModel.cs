@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -9,15 +8,14 @@ using ErogeHelper.Common.Extention;
 using ErogeHelper.Common.Messenger;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.ViewModel.Window;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ErogeHelper.ViewModel.Page
 {
     public class GeneralViewModel : PropertyChangedBase, IHandle<PageNavigatedMessage>
     {
         public GeneralViewModel(
-            EhConfigRepository ehConfigRepository, 
-            IEventAggregator eventAggregator, 
+            EhConfigRepository ehConfigRepository,
+            IEventAggregator eventAggregator,
             IServiceProvider serviceProvider,
             GameRuntimeDataRepo gameRuntimeDataRepo)
         {
@@ -44,12 +42,12 @@ namespace ErogeHelper.ViewModel.Page
         }
 
         public int ReceivedMaxTextLength
-        { 
+        {
             get => _ehConfigRepository.MaxAcceptTextLength;
-            set 
+            set
             {
                 if (value < 60 || value > 180 || double.IsNaN(value))
-                { 
+                {
                     NotifyOfPropertyChange(() => ReceivedMaxTextLength);
                     return;
                 }
@@ -59,17 +57,17 @@ namespace ErogeHelper.ViewModel.Page
         }
 
         public bool UseDanmaku
-        { 
+        {
             get => _ehConfigRepository.UseDanmaku;
             set
             {
                 if (value)
                 {
-                    _eventAggregator.PublishOnUIThreadAsync(new DanmakuVisibleMessage {Status = true});
+                    _eventAggregator.PublishOnUIThreadAsync(new DanmakuVisibleMessage { Status = true });
                 }
                 else
                 {
-                    _eventAggregator.PublishOnUIThreadAsync(new DanmakuVisibleMessage {Status = false});
+                    _eventAggregator.PublishOnUIThreadAsync(new DanmakuVisibleMessage { Status = false });
                 }
                 _ehConfigRepository.UseDanmaku = value;
             }
@@ -107,13 +105,13 @@ namespace ErogeHelper.ViewModel.Page
         public string DiskUsageProgressBarText
         {
             get => _diskUsageProgressBarText;
-            set { _diskUsageProgressBarText = value; NotifyOfPropertyChange(() => DiskUsageProgressBarText);}
+            set { _diskUsageProgressBarText = value; NotifyOfPropertyChange(() => DiskUsageProgressBarText); }
         }
 
         public double DiskUsageProgressBarValue
         {
             get => _diskUsageProgressBarValue;
-            set { _diskUsageProgressBarValue = value; NotifyOfPropertyChange(() => DiskUsageProgressBarValue);}
+            set { _diskUsageProgressBarValue = value; NotifyOfPropertyChange(() => DiskUsageProgressBarValue); }
         }
 
         private void GetDiskUsage()

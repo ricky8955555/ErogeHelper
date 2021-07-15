@@ -1,10 +1,4 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Common.Enum;
-using ErogeHelper.Common.Extention;
-using ErogeHelper.Model.Repository;
-using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -18,6 +12,12 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Caliburn.Micro;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Common.Enum;
+using ErogeHelper.Common.Extention;
+using ErogeHelper.Model.Repository;
+using ErogeHelper.ViewModel.Entity.NotifyItem;
 
 namespace ErogeHelper.Common
 {
@@ -98,22 +98,40 @@ namespace ErogeHelper.Common
         }
 
         /// <summary>
-        /// Get MD5 hash by file
+        /// Get MD5 hash
         /// </summary>
-        /// <param name="filePath">Absolute file path</param>
-        /// <returns>Upper case string</returns>
-        public static string GetFileMd5(string filePath)
+        public static string Md5Calculate(byte[] buffer, bool toUpper = false)
         {
-            using var stream = File.OpenRead(filePath);
             var md5 = MD5.Create();
-            byte[] hash = md5.ComputeHash(stream);
+            byte[] hash = md5.ComputeHash(buffer);
 
             var sb = new StringBuilder();
+
+            string format = toUpper ? "X2" : "x2";
+
             foreach (byte byteItem in hash)
             {
-                sb.Append(byteItem.ToString("X2"));
+                sb.Append(byteItem.ToString(format));
             }
+
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Get MD5 hash
+        /// </summary>
+        public static string Md5Calculate(string str, Encoding encoding, bool toUpper = false)
+        {
+            byte[] buffer = encoding.GetBytes(str);
+            return Md5Calculate(buffer, toUpper);
+        }
+
+        /// <summary>
+        /// Get MD5 hash
+        /// </summary>
+        public static string Md5Calculate(string str, bool toUpper = false)
+        {
+            return Md5Calculate(str, Encoding.Default, toUpper);
         }
 
         /// <summary>
@@ -249,7 +267,7 @@ namespace ErogeHelper.Common
         }
 
         public static readonly string? AppVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-        
+
         public static string ConsoleI18N(string text)
         {
             // https://github.com/lgztx96/texthost/blob/master/texthost/texthost.cpp
@@ -317,8 +335,8 @@ namespace ErogeHelper.Common
         }
 
         public static bool IsGameForegroundFullScreen(IntPtr gameHwnd)
-        { 
-            foreach(var screen in WpfScreenHelper.Screen.AllScreens)
+        {
+            foreach (var screen in WpfScreenHelper.Screen.AllScreens)
             {
                 var rect = NativeMethods.GetWindowRect(gameHwnd);
                 var systemRect = new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);

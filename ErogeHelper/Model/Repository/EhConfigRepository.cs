@@ -1,15 +1,13 @@
-﻿using ErogeHelper.Common;
-using ErogeHelper.Common.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using ErogeHelper.Common.Constraint;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using ErogeHelper.Common.Entity;
-using System.Text.Json.Serialization;
+using ErogeHelper.Common.Constraint;
+using ErogeHelper.Common.Enum;
 
 namespace ErogeHelper.Model.Repository
 {
@@ -159,7 +157,7 @@ namespace ErogeHelper.Model.Repository
         }
 
         public bool MonitorClipboard
-            {
+        {
             get => GetValue(DefaultConfigValuesStore.MonitorClipboard);
             set => SetValue(value);
         }

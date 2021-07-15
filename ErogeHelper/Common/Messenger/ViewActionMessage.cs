@@ -14,9 +14,9 @@ namespace ErogeHelper.Common.Messenger
         /// <param name="context"></param>
         /// <param name="extraInfo"></param>
         public ViewActionMessage(
-            Type viewModelType, 
-            ViewAction action, 
-            ModernDialog? dialogType = null, 
+            Type viewModelType,
+            ViewAction action,
+            ModernDialog? dialogType = null,
             object? context = null,
             ViewType viewType = ViewType.Window,
             string extraInfo = "")
@@ -40,7 +40,7 @@ namespace ErogeHelper.Common.Messenger
             ExtraInfo = extraInfo;
         }
 
-        public Type WindowType { get; set; } 
+        public Type WindowType { get; set; }
 
         public ViewAction Action { get; set; }
 

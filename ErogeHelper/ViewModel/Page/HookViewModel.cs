@@ -1,24 +1,24 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using Caliburn.Micro;
 using ErogeHelper.Common;
 using ErogeHelper.Common.Entity;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Extention;
 using ErogeHelper.Common.Messenger;
+using ErogeHelper.Model.Entity.Payload;
 using ErogeHelper.Model.Entity.Table;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
+using ErogeHelper.View.Dialog;
 using ErogeHelper.ViewModel.Entity.NotifyItem;
 using ErogeHelper.ViewModel.Window;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using ErogeHelper.Model.Entity.Payload;
-using ErogeHelper.View.Dialog;
-using System.Threading;
 
 namespace ErogeHelper.ViewModel.Page
 {
@@ -47,7 +47,7 @@ namespace ErogeHelper.ViewModel.Page
 
             _eventAggregator.SubscribeOnUIThread(this);
             _textractorService.DataEvent += DataProcess;
-            CurrentThreadsNames = _textractorService.Setting.Hookcode == string.Empty 
+            CurrentThreadsNames = _textractorService.Setting.Hookcode == string.Empty
                 ? "None"
                 : _textractorService.Setting.Hookcode + " with " + _textractorService.Setting.HookSettings.Count() + " threads";
             RegExp = _dataService.GetRegExp();
@@ -69,10 +69,10 @@ namespace ErogeHelper.ViewModel.Page
 
         private string _currentThreadsNames = string.Empty;
 
-        public string CurrentThreadsNames 
-        { 
-            get => _currentThreadsNames; 
-            set { _currentThreadsNames = value; NotifyOfPropertyChange(() => CurrentThreadsNames); } 
+        public string CurrentThreadsNames
+        {
+            get => _currentThreadsNames;
+            set { _currentThreadsNames = value; NotifyOfPropertyChange(() => CurrentThreadsNames); }
         }
 
         private string? _regExp = string.Empty;
@@ -377,7 +377,7 @@ namespace ErogeHelper.ViewModel.Page
                 var list = Regex.Split(textPendingToSend, RegExp);
                 textPendingToSend = string.Join("", list);
             }
-            
+
             HookComboSource
                 .Where(combo => !combo.Address.Equals(SelectedHookItem!.Address)).ToList()
                 .ForEach(shouldRemoveThread => HookComboSource.Remove(shouldRemoveThread));
@@ -491,13 +491,13 @@ namespace ErogeHelper.ViewModel.Page
 
             if (_ehConfigRepository.UseMoveableTextControl)
             {
-                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = true});
+                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = true });
             }
             else
             {
-                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage {UseMove = false});
+                await _eventAggregator.PublishOnUIThreadAsync(new UseMoveableTextMessage { UseMove = false });
             }
-            
+
             await _eventAggregator.PublishOnUIThreadAsync(
                 new ViewActionMessage(typeof(GameViewModel), ViewAction.Show, null, "InsideView"));
 

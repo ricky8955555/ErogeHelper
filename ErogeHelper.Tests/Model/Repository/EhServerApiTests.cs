@@ -1,11 +1,11 @@
-﻿using ErogeHelper.Model.Repository;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using ErogeHelper.Model.Entity.Payload;
+using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ErogeHelper.Tests.Model.Repository
 {
@@ -47,16 +47,16 @@ namespace ErogeHelper.Tests.Model.Repository
             // Act
             var resp = await ehServerApi.SendGameSetting(
                 new GameSettingPayload(
-                    "guest", 
-                    "erogehelper", 
-                    "1C4B90AFFDAA1548A3399235971598B4", 
+                    "guest",
+                    "erogehelper",
+                    "1C4B90AFFDAA1548A3399235971598B4",
                     new Dictionary<string, string>()
                     {
                         {"File", "cs2_open.exe"},
                         {"Dir", "恋ニ_甘味ヲソエテ２"},
                         {"Title", "恋ニ、甘味ヲソエテ２（DL版）"},
                         {"FileNoExt", "cs2_open"}
-                    }, 
+                    },
                     "{\"IsUserHook\":true,\"Hookcode\":\"HA8@168460:cs2_open.exe\",\"HookSettings\":[{\"ThreadContext\":5671568,\"SubThreadContext\":0}],\"UselessAddresses\":[]}",
                     ""));
             await resp.EnsureSuccessStatusCodeAsync();

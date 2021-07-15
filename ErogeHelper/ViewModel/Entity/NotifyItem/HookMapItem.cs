@@ -9,10 +9,10 @@ namespace ErogeHelper.ViewModel.Entity.NotifyItem
         private string _text = string.Empty;
         private bool _selected;
 
-        public bool Selected 
-        { 
-            get => _selected; 
-            set 
+        public bool Selected
+        {
+            get => _selected;
+            set
             {
                 _selected = value;
                 IoC.Get<IEventAggregator>().PublishOnUIThreadAsync(new NewTextThreadSelectedMessage(this, value));

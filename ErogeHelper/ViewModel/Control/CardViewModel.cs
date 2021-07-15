@@ -1,16 +1,16 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Caliburn.Micro;
 using ErogeHelper.Common;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Dictionary;
 using ErogeHelper.Model.Factory.Interface;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace ErogeHelper.ViewModel.Control
 {

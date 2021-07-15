@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ErogeHelper.Model.Entity.Payload;
 using ErogeHelper.Model.Entity.Response;
-using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
 using Refit;
 

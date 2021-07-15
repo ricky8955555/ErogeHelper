@@ -1,7 +1,7 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
+using Caliburn.Micro;
+using ErogeHelper.ViewModel.Entity.NotifyItem;
 
 namespace ErogeHelper.ViewModel.Control
 {

@@ -25,7 +25,7 @@ namespace ErogeHelper.ViewModel.Window
             _targetLanguage = ehConfigRepository.TargetTransLanguage;
 
             TermList = _termDataService.GetBindableTermItems();
-            _translatorFactory.AllInstance.ForEach(translator =>
+            _translatorFactory.Translators.ForEach(translator =>
             {
                 if (translator.UnLock &&
                     translator.SupportSrcLang.Contains(_sourceLanguage) &&
@@ -112,7 +112,7 @@ namespace ErogeHelper.ViewModel.Window
                 var tmpStr = PendingToTranslateText;
                 TermList
                     .Where(term => tmpStr.Contains(term.SourceWord))
-                    .ForEach(term => 
+                    .ForEach(term =>
                     {
                         tmpStr = tmpStr.Replace(term.SourceWord, $"{{{count}}}");
                         countSourceWordDic.Add(count, term.SourceWord);
@@ -123,15 +123,15 @@ namespace ErogeHelper.ViewModel.Window
                     .TranslateAsync(tmpStr, _sourceLanguage, _targetLanguage);
                 try
                 {
-                    for(var i = 0; i < countSourceWordDic.Count; i++)
+                    for (var i = 0; i < countSourceWordDic.Count; i++)
                     {
                         tmpStrTranslatedResult = tmpStrTranslatedResult.Replace(
-                            $"{{{++count}}}", 
+                            $"{{{++count}}}",
                             _termDataService.GetDictionary()[countSourceWordDic[count]]);
                     }
                     FinalResult = tmpStrTranslatedResult;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Log.Error(ex);
                 }
@@ -147,9 +147,9 @@ namespace ErogeHelper.ViewModel.Window
             set { _translatedResult = value; NotifyOfPropertyChange(() => TranslatedResult); }
         }
 
-        public string FinalResult 
-        { 
-            get => _finalResult; 
+        public string FinalResult
+        {
+            get => _finalResult;
             set { _finalResult = value; NotifyOfPropertyChange(() => FinalResult); }
         }
 

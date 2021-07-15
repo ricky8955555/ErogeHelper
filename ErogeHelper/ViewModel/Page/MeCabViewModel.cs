@@ -1,12 +1,12 @@
-﻿using Caliburn.Micro;
+﻿using System.IO;
+using System.IO.Compression;
+using System.Threading.Tasks;
+using System.Windows;
+using Caliburn.Micro;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Common.Messenger;
 using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service.Interface;
-using System.IO;
-using System.IO.Compression;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ErogeHelper.ViewModel.Page
 {
@@ -55,7 +55,7 @@ namespace ErogeHelper.ViewModel.Page
         public bool ChooseDicButtonEnabled
         {
             get => _chooseDicButtonEnabled;
-            set { _chooseDicButtonEnabled = value; NotifyOfPropertyChange(() => ChooseDicButtonEnabled);}
+            set { _chooseDicButtonEnabled = value; NotifyOfPropertyChange(() => ChooseDicButtonEnabled); }
         }
 
         public async void ChooseMecabDic()
@@ -109,7 +109,7 @@ namespace ErogeHelper.ViewModel.Page
             File.Delete(filename);
 
             await Application.Current.Dispatcher.InvokeAsync(() =>
-            { 
+            {
                 progress.IsActive = false;
                 dialogCanClose = true;
                 dialog.Hide();

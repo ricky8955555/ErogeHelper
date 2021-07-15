@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Documents;
 
 namespace ErogeHelper.Model.Entity.Payload
 {
@@ -37,7 +35,7 @@ namespace ErogeHelper.Model.Entity.Payload
             Type = type;
             Value = value;
         }
-        public string Type { get; } 
-        public string Value { get; } 
+        public string Type { get; }
+        public string Value { get; }
     }
 }

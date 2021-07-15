@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Model.Repository;
 using ErogeHelper.Model.Service;
 using ErogeHelper.Model.Service.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -44,7 +39,7 @@ namespace ErogeHelper.Tests.Model.Service
             _single.WaitOne();
             Assert.AreEqual(2, receivedTexts.Count);
             Assert.AreEqual("Textractor: initialization completed", receivedTexts[0]);
-            Assert.IsTrue(receivedTexts[1].Equals("Textractor: pipe connected") || 
+            Assert.IsTrue(receivedTexts[1].Equals("Textractor: pipe connected") ||
                           receivedTexts[1].Equals("Textractor: already injected") ||
                           receivedTexts[1].Equals("Textractor: couldn't inject"));
             notepad.Kill();

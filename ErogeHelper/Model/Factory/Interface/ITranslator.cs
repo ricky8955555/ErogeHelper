@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ErogeHelper.Common.Enum;
 
 namespace ErogeHelper.Model.Factory.Interface
@@ -23,9 +22,9 @@ namespace ErogeHelper.Model.Factory.Interface
         /// </summary>
         bool UnLock { get; }
 
-        List<TransLanguage> SupportSrcLang { get; }
+        TransLanguage[] SupportSrcLang { get; }
 
-        List<TransLanguage> SupportDesLang { get; }
+        TransLanguage[] SupportDesLang { get; }
 
         Task<string> TranslateAsync(string sourceText, TransLanguage srcLang, TransLanguage desLang);
     }

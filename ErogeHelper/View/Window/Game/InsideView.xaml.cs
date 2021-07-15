@@ -1,22 +1,22 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Common.Enum;
-using ErogeHelper.Common.Messenger;
-using ErogeHelper.Model.Service.Interface;
-using ModernWpf.Controls;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Caliburn.Micro;
+using ErogeHelper.Common;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Common.Enum;
+using ErogeHelper.Common.Messenger;
 using ErogeHelper.Model.Repository;
-using System.Windows.Input;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+using ErogeHelper.Model.Service.Interface;
+using ModernWpf.Controls;
 
 namespace ErogeHelper.View.Window.Game
 {
@@ -42,7 +42,7 @@ namespace ErogeHelper.View.Window.Game
             {
                 Utils.HideWindowInAltTab(this);
                 HandleAsync(
-                    isLoseFocus ? new LoseFocusMessage {Status = true} : new LoseFocusMessage {Status = false},
+                    isLoseFocus ? new LoseFocusMessage { Status = true } : new LoseFocusMessage { Status = false },
                     CancellationToken.None);
             };
         }
@@ -181,7 +181,7 @@ namespace ErogeHelper.View.Window.Game
                             _fullScreenButton.Icon = new SymbolIcon { Symbol = Symbol.BackToWindow };
                             _fullScreenButton.ToolTip = ErogeHelper.Language.Strings.GameView_SwitchWindow;
                         }
-                        _eventAggregator.PublishOnUIThreadAsync(new FullScreenChangedMessage {IsFullScreen = true});
+                        _eventAggregator.PublishOnUIThreadAsync(new FullScreenChangedMessage { IsFullScreen = true });
                         _bringToTopTimer?.Start();
                     }
                     else
@@ -192,7 +192,7 @@ namespace ErogeHelper.View.Window.Game
                             _fullScreenButton.Icon = new SymbolIcon { Symbol = Symbol.FullScreen };
                             _fullScreenButton.ToolTip = ErogeHelper.Language.Strings.GameView_SwitchFullScreen;
                         }
-                        _eventAggregator.PublishOnUIThreadAsync(new FullScreenChangedMessage {IsFullScreen = false});
+                        _eventAggregator.PublishOnUIThreadAsync(new FullScreenChangedMessage { IsFullScreen = false });
                         _bringToTopTimer?.Stop();
                     }
                     _gameWindowHooker.ResetWindowHandler();
@@ -221,7 +221,7 @@ namespace ErogeHelper.View.Window.Game
             return Task.CompletedTask;
         }
 
-        protected override void OnClosed(EventArgs e) 
+        protected override void OnClosed(EventArgs e)
         {
             RegisterAppBar(true);
             _eventAggregator.Unsubscribe(this);
@@ -240,7 +240,7 @@ namespace ErogeHelper.View.Window.Game
         #region Moveable Text Control
 
         private System.Windows.Controls.Control? _control;
-        
+
         const int Band = 10;
         const int BtnMinWidth = 100;
         const int BtnMinHeight = 100;
@@ -446,7 +446,7 @@ namespace ErogeHelper.View.Window.Game
 
         // UNDONE: 只能左右移动，上下高度由控件自动确定
         private void ResizeGripper_DragDelta(object sender, DragDeltaEventArgs e)
-        {                                                     
+        {
             if (Width + e.HorizontalChange >= 100 && Width >= 100)
             {
                 Width += e.HorizontalChange;

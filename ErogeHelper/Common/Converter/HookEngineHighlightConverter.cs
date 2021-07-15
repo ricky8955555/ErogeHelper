@@ -11,7 +11,7 @@ namespace ErogeHelper.Common.Converter
             {
                 return "UserHook";
             }
-            
+
             return value;
         }
 

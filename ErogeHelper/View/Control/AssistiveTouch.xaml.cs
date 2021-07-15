@@ -1,9 +1,4 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common.Entity;
-using ErogeHelper.Model.Repository;
-using ErogeHelper.Model.Service;
-using ErogeHelper.Model.Service.Interface;
-using System;
+﻿using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +6,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Caliburn.Micro;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Model.Repository;
+using ErogeHelper.Model.Service;
+using ErogeHelper.Model.Service.Interface;
 
 namespace ErogeHelper.View.Control
 {
@@ -58,9 +58,9 @@ namespace ErogeHelper.View.Control
         {
             InitializeComponent();
 
-            GameWindowHooker.ExitAction += _ => 
+            GameWindowHooker.ExitAction += _ =>
             {
-                IoC.Get<EhConfigRepository>().AssistiveTouchPostion = 
+                IoC.Get<EhConfigRepository>().AssistiveTouchPostion =
                     JsonSerializer.Serialize(_touchPosMemory);
             };
             IoC.Get<IGameWindowHooker>().NewWindowSize += (windowSize) =>
@@ -240,8 +240,8 @@ namespace ErogeHelper.View.Control
             Margin = new Thickness(left, top, 0, 0);
         }
 
-        private AssistiveTouchPosition _touchPosMemory = 
-            System.Text.Json.JsonSerializer.Deserialize<AssistiveTouchPosition>(IoC.Get<EhConfigRepository>().AssistiveTouchPostion) ?? new(TouchButtonCorner.UpperLeft); 
+        private AssistiveTouchPosition _touchPosMemory =
+            System.Text.Json.JsonSerializer.Deserialize<AssistiveTouchPosition>(IoC.Get<EhConfigRepository>().AssistiveTouchPostion) ?? new(TouchButtonCorner.UpperLeft);
 
         /// <summary>
         /// Init
@@ -302,7 +302,7 @@ namespace ErogeHelper.View.Control
             else
             {
                 // Disable flyout popup
-                if (e is not null) 
+                if (e is not null)
                     e.Handled = true;
             }
 
@@ -328,7 +328,7 @@ namespace ErogeHelper.View.Control
 
         private void ResetButtonPostion()
         {
-            switch(_touchPosMemory.Corner)
+            switch (_touchPosMemory.Corner)
             {
                 case TouchButtonCorner.UpperLeft:
                     _immediateMargin = new Thickness(ButtonSpace, ButtonSpace, 0, 0);
@@ -336,43 +336,43 @@ namespace ErogeHelper.View.Control
                     break;
                 case TouchButtonCorner.UpperRight:
                     _immediateMargin = new Thickness(
-                        _newGameViewWidth - ActualWidth  - ButtonSpace * 2, 
+                        _newGameViewWidth - ActualWidth - ButtonSpace * 2,
                         ButtonSpace, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.LowerLeft:
                     _immediateMargin = new Thickness(
-                        ButtonSpace, 
+                        ButtonSpace,
                         _newGameViewHeight - ActualHeight - ButtonSpace * 2, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.LowerRight:
                     _immediateMargin = new Thickness(
-                        _newGameViewWidth - ActualWidth - ButtonSpace * 2, 
+                        _newGameViewWidth - ActualWidth - ButtonSpace * 2,
                         _newGameViewHeight - ActualHeight - ButtonSpace * 2, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.Left:
                     _immediateMargin = new Thickness(
-                        ButtonSpace, 
+                        ButtonSpace,
                         _touchPosMemory.Scale * _newGameViewHeight - ButtonSpace - Height / 2, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.Top:
                     _immediateMargin = new Thickness(
-                        _touchPosMemory.Scale * _newGameViewWidth - ButtonSpace - Width / 2, 
+                        _touchPosMemory.Scale * _newGameViewWidth - ButtonSpace - Width / 2,
                         ButtonSpace, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.Right:
                     _immediateMargin = new Thickness(
-                        _newGameViewWidth - ActualWidth - ButtonSpace * 2, 
+                        _newGameViewWidth - ActualWidth - ButtonSpace * 2,
                         _touchPosMemory.Scale * _newGameViewHeight - ButtonSpace - Height / 2, 0, 0);
                     //Margin = _immediateMargin;
                     break;
                 case TouchButtonCorner.Bottom:
                     _immediateMargin = new Thickness(
-                        _newGameViewHeight - ActualHeight - ButtonSpace * 2, 
+                        _newGameViewHeight - ActualHeight - ButtonSpace * 2,
                         _touchPosMemory.Scale * _newGameViewWidth - ButtonSpace - Width / 2, 0, 0);
                     //Margin = _immediateMargin;
                     break;

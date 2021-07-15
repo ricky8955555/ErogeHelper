@@ -1,23 +1,10 @@
-﻿using ErogeHelper.Model;
-using ModernWpf.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
 using ErogeHelper.Common.Enum;
 using ErogeHelper.Model.Factory.Translator;
 using ErogeHelper.Model.Repository;
+using ModernWpf.Controls;
 
 namespace ErogeHelper.View.Dialog
 {
@@ -47,10 +34,10 @@ namespace ErogeHelper.View.Dialog
 
             var translator = new BaiduApiTranslator(_ehConfigRepository)
             {
-                AppId = Appid.Text, 
+                AppId = Appid.Text,
                 SecretKey = SecretKey.Text
             };
-            string result = await translator.TranslateAsync("頼りになる", TransLanguage.日本語, TransLanguage.English);
+            string result = await translator.TranslateAsync("頼りになる", TransLanguage.Japanese, TransLanguage.English);
             if (result.Equals("Rely on"))
             {
                 IsPrimaryButtonEnabled = true;

@@ -1,15 +1,15 @@
-﻿using Caliburn.Micro;
-using ErogeHelper.Common;
-using ErogeHelper.Common.Comparer;
-using ErogeHelper.Model.Service.Interface;
-using ErogeHelper.ViewModel.Entity.NotifyItem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using ErogeHelper.Common;
+using ErogeHelper.Common.Comparer;
+using ErogeHelper.Model.Service.Interface;
+using ErogeHelper.ViewModel.Entity.NotifyItem;
 
 namespace ErogeHelper.Model.Service
 {

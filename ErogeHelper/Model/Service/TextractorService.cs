@@ -1,12 +1,12 @@
-﻿using ErogeHelper.Common.Entity;
-using ErogeHelper.Common.Function;
-using ErogeHelper.Model.Service.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ErogeHelper.Common.Entity;
+using ErogeHelper.Common.Function;
+using ErogeHelper.Model.Service.Interface;
 
 namespace ErogeHelper.Model.Service
 {
@@ -129,28 +129,28 @@ namespace ErogeHelper.Model.Service
                 Hookcode = "HB0@0",
                 Text = "ErogeHelper: Detach Processes " + string.Join(',', _gameProcesses.Select(proc => proc.Id))
             });
-            
+
             // XXX: Too fast
-            await Task.Run(async() => 
+            await Task.Run(async () =>
             {
                 await Task.Delay(50);
                 _gameProcesses.ForEach(proc => _ = TextHostDll.InjectProcess((uint)proc.Id));
             });
         }
 
-        public void RemoveHook(long address) => 
+        public void RemoveHook(long address) =>
             _gameProcesses.ForEach(proc => _ = TextHostDll.RemoveHook((uint)proc.Id, (ulong)address));
 
         public void RemoveUselessHooks()
-        { 
+        {
             // FIXME: Unload hooks when submit
             //_gameProcesses.ForEach(proc =>
             //{ 
-                //_threadHandleDict.Values
-                //    .Where(thread => !thread.Hookcode.Equals(Setting.Hookcode) && thread.Address != -1)
-                //    .Select(thread => thread.Address)
-                //    .Distinct().ToList()
-                //    .ForEach(address => _ = TextHostDll.RemoveHook((uint)proc.Id, (ulong)address));
+            //_threadHandleDict.Values
+            //    .Where(thread => !thread.Hookcode.Equals(Setting.Hookcode) && thread.Address != -1)
+            //    .Select(thread => thread.Address)
+            //    .Distinct().ToList()
+            //    .ForEach(address => _ = TextHostDll.RemoveHook((uint)proc.Id, (ulong)address));
             //});
         }
 
@@ -178,7 +178,7 @@ namespace ErogeHelper.Model.Service
         {
             if (Setting.Hookcode != string.Empty && !Setting.Hookcode.Equals(hookcode) && firstTimeInject)
             {
-                _gameProcesses.ForEach(proc => 
+                _gameProcesses.ForEach(proc =>
                     _ = TextHostDll.RemoveHook((uint)proc.Id, address));
             }
 

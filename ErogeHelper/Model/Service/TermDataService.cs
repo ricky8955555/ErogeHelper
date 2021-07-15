@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Caliburn.Micro;
 using ErogeHelper.Model.Entity.Table;
 using ErogeHelper.Model.Repository;
@@ -22,7 +21,7 @@ namespace ErogeHelper.Model.Service
 
         private readonly EhDbRepository _ehDbRepository;
 
-        private readonly Dictionary<string, string> _termDictionary = new ();
+        private readonly Dictionary<string, string> _termDictionary = new();
 
         public BindableCollection<TermItem> GetBindableTermItems()
         {
@@ -42,7 +41,7 @@ namespace ErogeHelper.Model.Service
 
         public Dictionary<string, string> GetDictionary() => _termDictionary;
 
-        public Task DeleteTermInDatabaseAsync(TermItem termItem) => 
+        public Task DeleteTermInDatabaseAsync(TermItem termItem) =>
             _ehDbRepository.DeleteUserTermAsync(new UserTermTable(termItem.SourceWord, termItem.TargetWord));
 
         //private int _count = 1234;
@@ -61,10 +60,10 @@ namespace ErogeHelper.Model.Service
             //        countSourceWordDic.Add(count, term.SourceWord);
             //        count--;
             //    });
-            
+
             //var tmpStrTranslatedResult = await _translatorFactory.GetTranslator(SelectedTranslator.TranslatorName)
             //    .TranslateAsync(tmpStr, _sourceLanguage, _targetLanguage);
-            
+
             //return originalText;
         }
 
